@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeritasRAG Grounding Overlay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+            margin: 0;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
+            border: 1px solid #e2e8f0;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .stat-box {
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                <div>
+                    <h1 style="margin:0; font-size:22px; font-weight:700; color:#0f172a;">🛡️ VeritasRAG Grounding Report</h1>
+                    <p style="margin:4px 0 0 0; color:#64748b; font-size:14px;">Real-time hallucination-flagging middleware verification</p>
+                </div>
+                <div style="text-align:right;">
+                    <span style="font-size:26px; font-weight:800; color:#d97706;">66%</span>
+                    <div style="font-size:12px; font-weight:600; color:#d97706; text-transform:uppercase;">
+                        partially grounded
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:18px; padding:12px; background:#f8fafc; border-radius:8px; border-left:3px solid #3b82f6;">
+                <strong style="font-size:13px; color:#475569;">User Query:</strong>
+                <div style="font-size:14px; font-weight:500; color:#1e293b; margin-top:2px;">What is the recommended adult dosage of ibuprofen and its history?</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value" style="color:#16a34a;">2</div>
+                    <div class="stat-label">Grounded</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" style="color:#d97706;">0</div>
+                    <div class="stat-label">Inferred</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" style="color:#dc2626;">1</div>
+                    <div class="stat-label">Hallucinated</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">4372ms</div>
+                    <div class="stat-label">Latency</div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="font-size:17px; font-weight:700; color:#334155; margin-bottom:14px;">
+            Detailed Sentence-Level Grounding Breakdown (3 sentences)
+        </h2>
+
+        
+            <div style='background:#f0fdf4; border-left:4px solid #22c55e; border-radius:8px; padding:14px 18px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.05);'>
+                <div style='display:flex; justify-content:space-between; align-items:flex-start;'>
+                    <div style='font-size:15px; font-weight:500; color:#1e293b; line-height:1.5; flex:1;'>
+                        <span style='color:#64748b; font-size:13px; margin-right:6px;'>[1]</span>
+                        The standard adult dose of ibuprofen is 200 to 400 mg every 4 to 6 hours.
+                    </div>
+                    <div style='margin-left:16px; display:flex; align-items:center; gap:8px;'>
+                        <span style='background:#dcfce7; color:#15803d; font-size:12px; font-weight:700; padding:3px 10px; border-radius:12px;'>
+                            🟢 GROUNDED
+                        </span>
+                        <span style='font-size:13px; font-weight:600; color:#475569;'>
+                            0.99
+                        </span>
+                    </div>
+                </div>
+                
+                <div style='margin-top:8px; font-size:13px; color:#475569;'>
+                    <strong>Source Evidence:</strong> <span style='background:#e2e8f0; color:#334155; font-size:12px; font-weight:600; padding:2px 8px; border-radius:12px;'>📄 chunk_rx_01</span>
+                    <div style='margin-top:4px; font-style:italic; background:rgba(255,255,255,0.7); padding:6px 10px; border-radius:6px; border-left:3px solid #22c55e;'>
+                        "For adults, ibuprofen is typically administered at 200 to 400 mg per dose, every 4 to 6 hours as needed. The maximum OTC..."
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div style='background:#f0fdf4; border-left:4px solid #22c55e; border-radius:8px; padding:14px 18px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.05);'>
+                <div style='display:flex; justify-content:space-between; align-items:flex-start;'>
+                    <div style='font-size:15px; font-weight:500; color:#1e293b; line-height:1.5; flex:1;'>
+                        <span style='color:#64748b; font-size:13px; margin-right:6px;'>[2]</span>
+                        The maximum daily dose should not exceed 1200 mg without prescription.
+                    </div>
+                    <div style='margin-left:16px; display:flex; align-items:center; gap:8px;'>
+                        <span style='background:#dcfce7; color:#15803d; font-size:12px; font-weight:700; padding:3px 10px; border-radius:12px;'>
+                            🟢 GROUNDED
+                        </span>
+                        <span style='font-size:13px; font-weight:600; color:#475569;'>
+                            1.00
+                        </span>
+                    </div>
+                </div>
+                
+                <div style='margin-top:8px; font-size:13px; color:#475569;'>
+                    <strong>Source Evidence:</strong> <span style='background:#e2e8f0; color:#334155; font-size:12px; font-weight:600; padding:2px 8px; border-radius:12px;'>📄 chunk_rx_01</span>
+                    <div style='margin-top:4px; font-style:italic; background:rgba(255,255,255,0.7); padding:6px 10px; border-radius:6px; border-left:3px solid #22c55e;'>
+                        "For adults, ibuprofen is typically administered at 200 to 400 mg per dose, every 4 to 6 hours as needed. The maximum OTC..."
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div style='background:#fef2f2; border-left:4px solid #ef4444; border-radius:8px; padding:14px 18px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.05);'>
+                <div style='display:flex; justify-content:space-between; align-items:flex-start;'>
+                    <div style='font-size:15px; font-weight:500; color:#1e293b; line-height:1.5; flex:1;'>
+                        <span style='color:#64748b; font-size:13px; margin-right:6px;'>[3]</span>
+                        Ibuprofen was invented in 1995 by Dr. Mark Zuckerberg at Harvard University.
+                    </div>
+                    <div style='margin-left:16px; display:flex; align-items:center; gap:8px;'>
+                        <span style='background:#fee2e2; color:#b91c1c; font-size:12px; font-weight:700; padding:3px 10px; border-radius:12px;'>
+                            🔴 HALLUCINATED
+                        </span>
+                        <span style='font-size:13px; font-weight:600; color:#475569;'>
+                            0.00
+                        </span>
+                    </div>
+                </div>
+                
+                <div style='margin-top:6px; font-size:12px; color:#dc2626; font-weight:500;'>
+                    ⚠️ No supporting evidence found in retrieved chunks.
+                </div>
+                
+            </div>
+            
+
+        <div style="text-align:center; font-size:12px; color:#94a3b8; margin-top:30px;">
+            Generated by VeritasRAG Middleware · Models: nli_cross_encoder, atomic_fact_entailment, neuro_symbolic_entity_guard
+        </div>
+    </div>
+</body>
+</html>

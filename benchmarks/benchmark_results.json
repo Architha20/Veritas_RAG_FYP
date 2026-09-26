@@ -1,0 +1,1210 @@
+{
+  "Vectara HHEM (Hughes et al., 2023)": {
+    "accuracy": 64.0,
+    "precision": 65.0,
+    "recall": 60.0,
+    "f1": 62.4,
+    "avg_latency_ms": 115.0,
+    "published": true
+  },
+  "Ragas Faithfulness (Es et al., 2024)": {
+    "accuracy": 66.5,
+    "precision": 68.2,
+    "recall": 61.8,
+    "f1": 64.8,
+    "avg_latency_ms": 1420.0,
+    "published": true
+  },
+  "GPT-4 Zero-Shot Direct (Niu et al., 2024)": {
+    "accuracy": 72.5,
+    "precision": 74.5,
+    "recall": 68.2,
+    "f1": 71.2,
+    "avg_latency_ms": 2850.0,
+    "published": true
+  },
+  "AlignScore-base (Zha et al., 2023)": {
+    "accuracy": 82.5,
+    "precision": 84.0,
+    "recall": 81.0,
+    "f1": 82.5,
+    "avg_latency_ms": 520.0,
+    "published": true
+  },
+  "Approach A (Bi-Encoder Cosine)": {
+    "tp": 5,
+    "fp": 4,
+    "fn": 15,
+    "tn": 16,
+    "accuracy": 52.5,
+    "precision": 55.56,
+    "recall": 25.0,
+    "f1": 34.48,
+    "avg_latency_ms": 67.3,
+    "detailed": [
+      {
+        "id": "ragtruth_qa_01",
+        "target": "grounded",
+        "predicted": "inferred",
+        "score": 0.6787,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_qa_02",
+        "target": "hallucinated",
+        "predicted": "inferred",
+        "score": 0.6489,
+        "hallucination_type": "evident_conflict"
+      },
+      {
+        "id": "faithbench_ent_03",
+        "target": "grounded",
+        "predicted": "partially_grounded",
+        "score": 0.6628,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_ent_04",
+        "target": "hallucinated",
+        "predicted": "inferred",
+        "score": 0.6928,
+        "hallucination_type": "entity_swap_and_temporal"
+      },
+      {
+        "id": "ragtruth_qa_05",
+        "target": "grounded",
+        "predicted": "partially_grounded",
+        "score": 0.6164,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_qa_06",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.5892,
+        "hallucination_type": "factual_conflict"
+      },
+      {
+        "id": "factscore_07",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.7262,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "factscore_08",
+        "target": "hallucinated",
+        "predicted": "inferred",
+        "score": 0.6833,
+        "hallucination_type": "partial_extrinsic"
+      },
+      {
+        "id": "faithbench_neg_09",
+        "target": "hallucinated",
+        "predicted": "grounded",
+        "score": 0.8116,
+        "hallucination_type": "negation_inversion"
+      },
+      {
+        "id": "faithbench_neg_10",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.8442,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_num_11",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.7432,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_num_12",
+        "target": "hallucinated",
+        "predicted": "inferred",
+        "score": 0.5822,
+        "hallucination_type": "numerical_fabrication"
+      },
+      {
+        "id": "ragtruth_comp_13",
+        "target": "grounded",
+        "predicted": "partially_grounded",
+        "score": 0.5787,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_comp_14",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.4151,
+        "hallucination_type": "scientific_contradiction"
+      },
+      {
+        "id": "faithbench_ext_15",
+        "target": "grounded",
+        "predicted": "partially_grounded",
+        "score": 0.624,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_ext_16",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.6293,
+        "hallucination_type": "extrinsic_entity_fabrication"
+      },
+      {
+        "id": "ragtruth_med_17",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.8485,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_med_18",
+        "target": "hallucinated",
+        "predicted": "grounded",
+        "score": 0.7801,
+        "hallucination_type": "biological_inversion"
+      },
+      {
+        "id": "faithbench_law_19",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.8646,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_law_20",
+        "target": "hallucinated",
+        "predicted": "inferred",
+        "score": 0.6538,
+        "hallucination_type": "legal_concept_swap"
+      },
+      {
+        "id": "halueval_qa_21",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.7227,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "halueval_qa_22",
+        "target": "hallucinated",
+        "predicted": "inferred",
+        "score": 0.6427,
+        "hallucination_type": "numerical_fabrication"
+      },
+      {
+        "id": "ragtruth_fin_23",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.7134,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_fin_24",
+        "target": "hallucinated",
+        "predicted": "inferred",
+        "score": 0.6604,
+        "hallucination_type": "factual_conflict"
+      },
+      {
+        "id": "faithbench_rel_25",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.8186,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_rel_26",
+        "target": "hallucinated",
+        "predicted": "grounded",
+        "score": 0.7135,
+        "hallucination_type": "entity_swap_and_temporal"
+      },
+      {
+        "id": "ragtruth_bio_27",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.8169,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_bio_28",
+        "target": "hallucinated",
+        "predicted": "inferred",
+        "score": 0.6105,
+        "hallucination_type": "biological_inversion"
+      },
+      {
+        "id": "factscore_comp_29",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.799,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "factscore_comp_30",
+        "target": "hallucinated",
+        "predicted": "grounded",
+        "score": 0.7301,
+        "hallucination_type": "partial_extrinsic"
+      },
+      {
+        "id": "faithbench_date_31",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.7967,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_date_32",
+        "target": "hallucinated",
+        "predicted": "inferred",
+        "score": 0.6517,
+        "hallucination_type": "temporal_shift"
+      },
+      {
+        "id": "ragtruth_chem_33",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9548,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_chem_34",
+        "target": "hallucinated",
+        "predicted": "grounded",
+        "score": 0.7411,
+        "hallucination_type": "scientific_contradiction"
+      },
+      {
+        "id": "halueval_env_35",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9049,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "halueval_env_36",
+        "target": "hallucinated",
+        "predicted": "grounded",
+        "score": 0.8281,
+        "hallucination_type": "numerical_fabrication"
+      },
+      {
+        "id": "ragtruth_sports_37",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.8739,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_sports_38",
+        "target": "hallucinated",
+        "predicted": "inferred",
+        "score": 0.6411,
+        "hallucination_type": "entity_swap_and_temporal"
+      },
+      {
+        "id": "faithbench_med_39",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.7032,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_med_40",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.54,
+        "hallucination_type": "biological_inversion"
+      }
+    ],
+    "published": false
+  },
+  "Approach B (DeBERTa-v3 NLI)": {
+    "tp": 20,
+    "fp": 1,
+    "fn": 0,
+    "tn": 19,
+    "accuracy": 97.5,
+    "precision": 95.24,
+    "recall": 100.0,
+    "f1": 97.56,
+    "avg_latency_ms": 304.8,
+    "detailed": [
+      {
+        "id": "ragtruth_qa_01",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9958,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_qa_02",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "evident_conflict"
+      },
+      {
+        "id": "faithbench_ent_03",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9849,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_ent_04",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "entity_swap_and_temporal"
+      },
+      {
+        "id": "ragtruth_qa_05",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.995,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_qa_06",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.484,
+        "hallucination_type": "factual_conflict"
+      },
+      {
+        "id": "factscore_07",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9975,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "factscore_08",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.4984,
+        "hallucination_type": "partial_extrinsic"
+      },
+      {
+        "id": "faithbench_neg_09",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "negation_inversion"
+      },
+      {
+        "id": "faithbench_neg_10",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9941,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_num_11",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9983,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_num_12",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "numerical_fabrication"
+      },
+      {
+        "id": "ragtruth_comp_13",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9825,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_comp_14",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.4894,
+        "hallucination_type": "scientific_contradiction"
+      },
+      {
+        "id": "faithbench_ext_15",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9456,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_ext_16",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.4985,
+        "hallucination_type": "extrinsic_entity_fabrication"
+      },
+      {
+        "id": "ragtruth_med_17",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9967,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_med_18",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "biological_inversion"
+      },
+      {
+        "id": "faithbench_law_19",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9958,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_law_20",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "legal_concept_swap"
+      },
+      {
+        "id": "halueval_qa_21",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9982,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "halueval_qa_22",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "numerical_fabrication"
+      },
+      {
+        "id": "ragtruth_fin_23",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9969,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_fin_24",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "factual_conflict"
+      },
+      {
+        "id": "faithbench_rel_25",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9957,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_rel_26",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "entity_swap_and_temporal"
+      },
+      {
+        "id": "ragtruth_bio_27",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9977,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_bio_28",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "biological_inversion"
+      },
+      {
+        "id": "factscore_comp_29",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9899,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "factscore_comp_30",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0001,
+        "hallucination_type": "partial_extrinsic"
+      },
+      {
+        "id": "faithbench_date_31",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.995,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_date_32",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "temporal_shift"
+      },
+      {
+        "id": "ragtruth_chem_33",
+        "target": "grounded",
+        "predicted": "hallucinated",
+        "score": 0.032,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_chem_34",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "scientific_contradiction"
+      },
+      {
+        "id": "halueval_env_35",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9943,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "halueval_env_36",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "numerical_fabrication"
+      },
+      {
+        "id": "ragtruth_sports_37",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9555,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_sports_38",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "entity_swap_and_temporal"
+      },
+      {
+        "id": "faithbench_med_39",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9947,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_med_40",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0001,
+        "hallucination_type": "biological_inversion"
+      }
+    ],
+    "published": false
+  },
+  "Approach C (Atomic Verifier)": {
+    "tp": 20,
+    "fp": 4,
+    "fn": 0,
+    "tn": 16,
+    "accuracy": 90.0,
+    "precision": 83.33,
+    "recall": 100.0,
+    "f1": 90.91,
+    "avg_latency_ms": 387.8,
+    "detailed": [
+      {
+        "id": "ragtruth_qa_01",
+        "target": "grounded",
+        "predicted": "partially_grounded",
+        "score": 0.7455,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_qa_02",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "evident_conflict"
+      },
+      {
+        "id": "faithbench_ent_03",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9517,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_ent_04",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "entity_swap_and_temporal"
+      },
+      {
+        "id": "ragtruth_qa_05",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.8581,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_qa_06",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.4789,
+        "hallucination_type": "factual_conflict"
+      },
+      {
+        "id": "factscore_07",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.997,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "factscore_08",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.4974,
+        "hallucination_type": "partial_extrinsic"
+      },
+      {
+        "id": "faithbench_neg_09",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "negation_inversion"
+      },
+      {
+        "id": "faithbench_neg_10",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9917,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_num_11",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9983,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_num_12",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "numerical_fabrication"
+      },
+      {
+        "id": "ragtruth_comp_13",
+        "target": "grounded",
+        "predicted": "partially_grounded",
+        "score": 0.7386,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_comp_14",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.4203,
+        "hallucination_type": "scientific_contradiction"
+      },
+      {
+        "id": "faithbench_ext_15",
+        "target": "grounded",
+        "predicted": "partially_grounded",
+        "score": 0.5007,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_ext_16",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.4984,
+        "hallucination_type": "extrinsic_entity_fabrication"
+      },
+      {
+        "id": "ragtruth_med_17",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9959,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_med_18",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "biological_inversion"
+      },
+      {
+        "id": "faithbench_law_19",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9948,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_law_20",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0002,
+        "hallucination_type": "legal_concept_swap"
+      },
+      {
+        "id": "halueval_qa_21",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9979,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "halueval_qa_22",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "numerical_fabrication"
+      },
+      {
+        "id": "ragtruth_fin_23",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.996,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_fin_24",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "factual_conflict"
+      },
+      {
+        "id": "faithbench_rel_25",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9963,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_rel_26",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "entity_swap_and_temporal"
+      },
+      {
+        "id": "ragtruth_bio_27",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9541,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_bio_28",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "biological_inversion"
+      },
+      {
+        "id": "factscore_comp_29",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9905,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "factscore_comp_30",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.4988,
+        "hallucination_type": "partial_extrinsic"
+      },
+      {
+        "id": "faithbench_date_31",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.6627,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_date_32",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "temporal_shift"
+      },
+      {
+        "id": "ragtruth_chem_33",
+        "target": "grounded",
+        "predicted": "hallucinated",
+        "score": 0.0826,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_chem_34",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "scientific_contradiction"
+      },
+      {
+        "id": "halueval_env_35",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.8973,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "halueval_env_36",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "numerical_fabrication"
+      },
+      {
+        "id": "ragtruth_sports_37",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.968,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_sports_38",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "entity_swap_and_temporal"
+      },
+      {
+        "id": "faithbench_med_39",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9869,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_med_40",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0001,
+        "hallucination_type": "biological_inversion"
+      }
+    ],
+    "published": false
+  },
+  "VeritasRAG SOTA Hybrid (Approach C + Guard)": {
+    "tp": 20,
+    "fp": 4,
+    "fn": 0,
+    "tn": 16,
+    "accuracy": 90.0,
+    "precision": 83.33,
+    "recall": 100.0,
+    "f1": 90.91,
+    "avg_latency_ms": 554.2,
+    "detailed": [
+      {
+        "id": "ragtruth_qa_01",
+        "target": "grounded",
+        "predicted": "partially_grounded",
+        "score": 0.7458,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_qa_02",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "evident_conflict"
+      },
+      {
+        "id": "faithbench_ent_03",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9849,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_ent_04",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "entity_swap_and_temporal"
+      },
+      {
+        "id": "ragtruth_qa_05",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.995,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_qa_06",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.484,
+        "hallucination_type": "factual_conflict"
+      },
+      {
+        "id": "factscore_07",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9975,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "factscore_08",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.4984,
+        "hallucination_type": "partial_extrinsic"
+      },
+      {
+        "id": "faithbench_neg_09",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "negation_inversion"
+      },
+      {
+        "id": "faithbench_neg_10",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9941,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_num_11",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9983,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_num_12",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "numerical_fabrication"
+      },
+      {
+        "id": "ragtruth_comp_13",
+        "target": "grounded",
+        "predicted": "partially_grounded",
+        "score": 0.7386,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_comp_14",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.4894,
+        "hallucination_type": "scientific_contradiction"
+      },
+      {
+        "id": "faithbench_ext_15",
+        "target": "grounded",
+        "predicted": "partially_grounded",
+        "score": 0.5007,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_ext_16",
+        "target": "hallucinated",
+        "predicted": "partially_grounded",
+        "score": 0.4985,
+        "hallucination_type": "extrinsic_entity_fabrication"
+      },
+      {
+        "id": "ragtruth_med_17",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9967,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_med_18",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "biological_inversion"
+      },
+      {
+        "id": "faithbench_law_19",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9958,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_law_20",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "legal_concept_swap"
+      },
+      {
+        "id": "halueval_qa_21",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9982,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "halueval_qa_22",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "numerical_fabrication"
+      },
+      {
+        "id": "ragtruth_fin_23",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9969,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_fin_24",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "factual_conflict"
+      },
+      {
+        "id": "faithbench_rel_25",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9963,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_rel_26",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "entity_swap_and_temporal"
+      },
+      {
+        "id": "ragtruth_bio_27",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9977,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_bio_28",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "biological_inversion"
+      },
+      {
+        "id": "factscore_comp_29",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9905,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "factscore_comp_30",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0001,
+        "hallucination_type": "partial_extrinsic"
+      },
+      {
+        "id": "faithbench_date_31",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.995,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_date_32",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "temporal_shift"
+      },
+      {
+        "id": "ragtruth_chem_33",
+        "target": "grounded",
+        "predicted": "hallucinated",
+        "score": 0.032,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_chem_34",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "scientific_contradiction"
+      },
+      {
+        "id": "halueval_env_35",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9943,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "halueval_env_36",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "numerical_fabrication"
+      },
+      {
+        "id": "ragtruth_sports_37",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.968,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "ragtruth_sports_38",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0,
+        "hallucination_type": "entity_swap_and_temporal"
+      },
+      {
+        "id": "faithbench_med_39",
+        "target": "grounded",
+        "predicted": "grounded",
+        "score": 0.9947,
+        "hallucination_type": "none"
+      },
+      {
+        "id": "faithbench_med_40",
+        "target": "hallucinated",
+        "predicted": "hallucinated",
+        "score": 0.0001,
+        "hallucination_type": "biological_inversion"
+      }
+    ],
+    "published": false
+  }
+}

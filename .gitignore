@@ -1,3 +1,38 @@
+# Virtual environments
+.venv/
 venv/
+env/
+ENV/
+
+# Python cache & compiled files
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Model weights and offline cache (large binaries >100MB exceed GitHub file limit)
+# Run `python scripts/save_models_locally.py` to download weights locally
+models/all-MiniLM-L6-v2/
+models/nli-deberta-v3-base/
+*.safetensors
+*.bin
+*.pt
+*.onnx
+
+# Environment and sensitive variables
+.env
+.env.*
+!.env.example
+
+# IDE / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

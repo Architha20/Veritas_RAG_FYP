@@ -1,0 +1,642 @@
+[
+  {
+    "id": "ragtruth_qa_01",
+    "source_benchmark": "RAGTruth",
+    "domain": "History / Architecture",
+    "query": "When was the Eiffel Tower constructed and who was the engineer?",
+    "response": "The Eiffel Tower was constructed between 1887 and 1889 in Paris. It was designed and engineered by Gustave Eiffel's company.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_hist_01",
+        "content": "The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France. It was constructed from 1887 to 1889 as the centerpiece of the 1889 World's Fair by Gustave Eiffel's engineering company."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Paraphrased dates and named entity match."
+  },
+  {
+    "id": "ragtruth_qa_02",
+    "source_benchmark": "RAGTruth",
+    "domain": "History / Architecture",
+    "query": "When was the Eiffel Tower constructed and who was the engineer?",
+    "response": "The Eiffel Tower was constructed in London in 1905 by Christopher Wren.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_hist_01",
+        "content": "The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France. It was constructed from 1887 to 1889 by Gustave Eiffel's engineering company."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "evident_conflict",
+    "notes": "Direct location, date, and person contradictions."
+  },
+  {
+    "id": "faithbench_ent_03",
+    "source_benchmark": "FaithBench",
+    "domain": "Biomedicine / Pharmacology",
+    "query": "What is Metformin used for and what is its standard starting dosage?",
+    "response": "Metformin is an oral medication used to manage blood sugar levels in type 2 diabetes. Patients usually begin treatment at 500 mg once or twice daily with meals.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_med_01",
+        "content": "Metformin is a first-line medication for the treatment of type 2 diabetes. The recommended starting dose of immediate-release metformin is 500 mg orally once or twice daily, administered with meals to reduce gastrointestinal side effects."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Precise medical facts correctly summarized."
+  },
+  {
+    "id": "faithbench_ent_04",
+    "source_benchmark": "FaithBench",
+    "domain": "Biomedicine / Pharmacology",
+    "query": "What is Metformin used for and what is its standard starting dosage?",
+    "response": "Metformin is an injectable antibiotic used to treat acute asthma with an initial dosage of 5000 mg twice daily.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_med_01",
+        "content": "Metformin is a first-line medication for the treatment of type 2 diabetes. The recommended starting dose is 500 mg orally once or twice daily."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "entity_swap_and_temporal",
+    "notes": "Drug category swapped (antibiotic), condition swapped (asthma), dose fabricated 10x (5000mg)."
+  },
+  {
+    "id": "ragtruth_qa_05",
+    "source_benchmark": "RAGTruth",
+    "domain": "Geography / Demographics",
+    "query": "What is the capital and population of Australia?",
+    "response": "Canberra is the capital city of Australia. The city has an estimated population of over 450,000 residents.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_geo_01",
+        "content": "Canberra is the federal capital of Australia. As of the recent census data, the estimated population of the Australian Capital Territory around Canberra is approximately 456,000."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Grounded numerical approximation."
+  },
+  {
+    "id": "ragtruth_qa_06",
+    "source_benchmark": "RAGTruth",
+    "domain": "Geography / Demographics",
+    "query": "What is the capital and population of Australia?",
+    "response": "Sydney is the capital of Australia. It is the largest city in the nation with 5 million residents.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_geo_01",
+        "content": "Canberra was chosen as the capital of Australia in 1908 as a compromise between Sydney and Melbourne. Sydney is the most populous city in Australia with 5.3 million residents."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "factual_conflict",
+    "notes": "Sydney claimed as capital when chunk states Canberra is capital."
+  },
+  {
+    "id": "factscore_07",
+    "source_benchmark": "FActScore",
+    "domain": "Biography / History",
+    "query": "Who was Alan Turing and what was his contribution to Bletchley Park?",
+    "response": "Alan Turing was an English mathematician and computer scientist. During World War II, he worked at Bletchley Park breaking German ciphers including the Enigma machine.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_bio_01",
+        "content": "Alan Mathison Turing was an English mathematician, computer scientist, logician, and cryptanalyst. During the Second World War, Turing was a leading participant in war-time codebreaking at Bletchley Park, playing a pivotal role in cracking intercepted coded messages including the German Enigma machine."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Multiple atomic claims all verified in context."
+  },
+  {
+    "id": "factscore_08",
+    "source_benchmark": "FActScore",
+    "domain": "Biography / History",
+    "query": "Who was Alan Turing and what was his contribution to Bletchley Park?",
+    "response": "Alan Turing was an English mathematician who worked at Bletchley Park. In 1950, he won the Nobel Prize in Physics for developing quantum cryptography.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_bio_01",
+        "content": "Alan Turing was an English mathematician and cryptanalyst who broke German ciphers at Bletchley Park during WWII. He never received a Nobel Prize."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "partial_extrinsic",
+    "notes": "Sentence 1 is true, but sentence 2 fabricates a Nobel Prize in Physics."
+  },
+  {
+    "id": "faithbench_neg_09",
+    "source_benchmark": "FaithBench",
+    "domain": "Legal / Policy",
+    "query": "Does the EU AI Act regulate high-risk AI systems?",
+    "response": "The EU AI Act explicitly exempts high-risk artificial intelligence systems from any technical compliance or safety testing requirements.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_eu_01",
+        "content": "The Artificial Intelligence Act (EU AI Act) is a European Union regulation that establishes strict mandatory compliance, risk management, and safety testing requirements for high-risk AI systems."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "negation_inversion",
+    "notes": "Negation polarity inversion ('exempts' vs 'strict mandatory requirements')."
+  },
+  {
+    "id": "faithbench_neg_10",
+    "source_benchmark": "FaithBench",
+    "domain": "Legal / Policy",
+    "query": "Does the EU AI Act regulate high-risk AI systems?",
+    "response": "The EU AI Act imposes comprehensive compliance requirements on high-risk AI applications in member states.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_eu_01",
+        "content": "The Artificial Intelligence Act (EU AI Act) establishes strict regulatory requirements for high-risk AI systems placed on the market or put into service in the European Union."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Paraphrased entailment."
+  },
+  {
+    "id": "ragtruth_num_11",
+    "source_benchmark": "RAGTruth",
+    "domain": "Finance / Earnings (Numerical Shift)",
+    "query": "What was Apple's Q4 revenue in 2023?",
+    "response": "Apple reported Q4 2023 revenue of $89.5 billion, down 1 percent year-over-year.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_aapl_01",
+        "content": "Apple Inc. today announced financial results for its fiscal 2023 fourth quarter ended September 30, 2023. The Company posted quarterly revenue of $89.5 billion, down 1 percent year over year."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Precise financial metrics."
+  },
+  {
+    "id": "ragtruth_num_12",
+    "source_benchmark": "RAGTruth",
+    "domain": "Finance / Earnings (Numerical Shift)",
+    "query": "What was Apple's Q4 revenue in 2023?",
+    "response": "Apple reported quarterly revenue of $98.5 billion, representing an increase of 14 percent year-over-year.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_aapl_01",
+        "content": "The Company posted quarterly revenue of $89.5 billion, down 1 percent year over year, and quarterly earnings per diluted share of $1.46."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "numerical_fabrication",
+    "notes": "Altered numbers: $98.5B instead of $89.5B, and +14% instead of -1%."
+  },
+  {
+    "id": "ragtruth_comp_13",
+    "source_benchmark": "RAGTruth",
+    "domain": "Astronomy / Physics",
+    "query": "How far is the Moon from Earth and does it have an atmosphere?",
+    "response": "The Moon orbits Earth at an average distance of approximately 384,400 kilometers. It has a very tenuous and negligible atmosphere known as an exosphere.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_astro_01",
+        "content": "The average distance from the Earth to the Moon is 384,400 km (238,900 mi). The Moon has only a very thin and tenuous atmosphere called an exosphere."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Accurate scientific claims."
+  },
+  {
+    "id": "ragtruth_comp_14",
+    "source_benchmark": "RAGTruth",
+    "domain": "Astronomy / Physics",
+    "query": "How far is the Moon from Earth and does it have an atmosphere?",
+    "response": "The Moon is 384,400 kilometers from Earth. It possesses a dense nitrogen-rich atmosphere capable of supporting liquid surface water.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_astro_01",
+        "content": "The average distance from the Earth to the Moon is 384,400 km. The Moon has a surface vacuum with an atmosphere practically negligible compared to Earth."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "scientific_contradiction",
+    "notes": "Distance is correct, but claims dense nitrogen atmosphere and liquid water."
+  },
+  {
+    "id": "faithbench_ext_15",
+    "source_benchmark": "FaithBench",
+    "domain": "Technology / Computing",
+    "query": "What is Python and when was it created?",
+    "response": "Python is a high-level programming language created by Guido van Rossum and released in 1991. It supports multiple programming paradigms.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_py_01",
+        "content": "Python is a general-purpose, high-level programming language created by Dutch programmer Guido van Rossum. It was first released on 20 February 1991, emphasizes code readability, and supports multiple programming paradigms."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Grounded programming language info."
+  },
+  {
+    "id": "faithbench_ext_16",
+    "source_benchmark": "FaithBench",
+    "domain": "Technology / Computing",
+    "query": "What is Python and when was it created?",
+    "response": "Python is a high-level programming language released in 1991. It was developed by Microsoft to replace C++ in operating system development.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_py_01",
+        "content": "Python is a general-purpose, high-level programming language created by Guido van Rossum and released in 1991."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "extrinsic_entity_fabrication",
+    "notes": "Fabricated Microsoft development and C++ replacement purpose."
+  },
+  {
+    "id": "ragtruth_med_17",
+    "source_benchmark": "RAGTruth",
+    "domain": "Genetics / Molecular Biology",
+    "query": "How does mRNA function in protein synthesis?",
+    "response": "Messenger RNA carries genetic codes from DNA inside the nucleus to ribosomes located in the cytoplasm for protein translation.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_bio_02",
+        "content": "Messenger RNA (mRNA) plays a vital role in molecular biology by carrying genetic sequence information copied from nuclear DNA out to cytoplasmic ribosomes, which direct the synthesis of proteins."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Grounded biological mechanism."
+  },
+  {
+    "id": "ragtruth_med_18",
+    "source_benchmark": "RAGTruth",
+    "domain": "Genetics / Molecular Biology",
+    "query": "How does mRNA function in protein synthesis?",
+    "response": "Messenger RNA is synthesized by ribosomes in the cytoplasm and migrates into the nucleus to replicate chromosomal DNA molecules.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_bio_02",
+        "content": "In protein synthesis, mRNA is transcribed from DNA within the nucleus and travels to the cytoplasm where ribosomes translate it into proteins."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "biological_inversion",
+    "notes": "Reversed direction and causal mechanism."
+  },
+  {
+    "id": "faithbench_law_19",
+    "source_benchmark": "FaithBench",
+    "domain": "Intellectual Property Law",
+    "query": "What is the standard duration of copyright protection for individual authors in the US?",
+    "response": "In the United States, copyright protection for works created by individual authors generally lasts for the life of the author plus an additional 70 years.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_law_01",
+        "content": "Under current United States copyright law, for works created on or after January 1, 1978, the copyright term for individual authors lasts for the lifetime of the creator plus 70 years following their death."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Exact legal statutory duration."
+  },
+  {
+    "id": "faithbench_law_20",
+    "source_benchmark": "FaithBench",
+    "domain": "Intellectual Property Law",
+    "query": "What is the standard duration of copyright protection for individual authors in the US?",
+    "response": "In the United States, copyrights expire automatically 14 years after creation and cannot be renewed or extended beyond that period.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_law_01",
+        "content": "Under current US copyright law, the copyright term for an individual author endures for the life of the author plus 70 years."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "legal_concept_swap",
+    "notes": "Conflates historical 1790 patent act term (14 years) with modern copyright law."
+  },
+  {
+    "id": "halueval_qa_21",
+    "source_benchmark": "HaluEval",
+    "domain": "Renewable Energy / Engineering",
+    "query": "What is the operational efficiency of modern commercial silicon solar panels?",
+    "response": "Commercial silicon photovoltaic panels typically achieve energy conversion efficiencies between 18% and 22% under standard testing conditions.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_solar_01",
+        "content": "Most commercial monocrystalline and polycrystalline silicon solar panels available on the market exhibit conversion efficiencies ranging from 18% to 22% under standard test conditions (STC)."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Accurate technical metrics."
+  },
+  {
+    "id": "halueval_qa_22",
+    "source_benchmark": "HaluEval",
+    "domain": "Renewable Energy / Engineering",
+    "query": "What is the operational efficiency of modern commercial silicon solar panels?",
+    "response": "Modern residential silicon panels routinely convert over 85% of incoming solar radiation into electrical power.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_solar_01",
+        "content": "Standard commercial silicon solar cells operate with conversion efficiencies between 18% and 22%, limited by thermodynamic Shockley-Queisser constraints."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "numerical_fabrication",
+    "notes": "Fabricates 85% efficiency violating Shockley-Queisser limit."
+  },
+  {
+    "id": "ragtruth_fin_23",
+    "source_benchmark": "RAGTruth",
+    "domain": "Macroeconomics / Monetary Policy",
+    "query": "What is the primary inflation target of the US Federal Reserve?",
+    "response": "The Federal Reserve's Federal Open Market Committee targets an annual inflation rate of 2 percent as measured by the Personal Consumption Expenditures price index.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_fed_01",
+        "content": "The Federal Open Market Committee (FOMC) judges that longer-run inflation at the rate of 2 percent, as measured by the annual change in the price index for personal consumption expenditures (PCE), is most consistent with the Federal Reserve's statutory mandate."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Accurate macroeconomic policy target."
+  },
+  {
+    "id": "ragtruth_fin_24",
+    "source_benchmark": "RAGTruth",
+    "domain": "Macroeconomics / Monetary Policy",
+    "query": "What is the primary inflation target of the US Federal Reserve?",
+    "response": "The Federal Reserve mandates that headline consumer inflation must be maintained at zero percent to prevent currency depreciation.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_fed_01",
+        "content": "The Federal Reserve targets a 2 percent inflation rate over the longer run to promote price stability and maximum sustainable employment."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "factual_conflict",
+    "notes": "Claims zero percent target instead of official 2 percent policy."
+  },
+  {
+    "id": "faithbench_rel_25",
+    "source_benchmark": "FaithBench",
+    "domain": "Space Exploration / Astrophysics",
+    "query": "When was the James Webb Space Telescope launched and where is it stationed?",
+    "response": "The James Webb Space Telescope was launched in December 2021 and operates in a halo orbit around the Sun-Earth Lagrange point 2 (L2).",
+    "chunks": [
+      {
+        "chunk_id": "chunk_jwst_01",
+        "content": "The James Webb Space Telescope (JWST) was launched on 25 December 2021 on an Ariane 5 rocket from Kourou, French Guiana. It operates in a halo orbit around the Sun-Earth second Lagrange point (L2), approximately 1.5 million kilometers from Earth."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Grounded orbital mechanics and launch history."
+  },
+  {
+    "id": "faithbench_rel_26",
+    "source_benchmark": "FaithBench",
+    "domain": "Space Exploration / Astrophysics",
+    "query": "When was the James Webb Space Telescope launched and where is it stationed?",
+    "response": "The James Webb Space Telescope was launched in 1990 and operates in low Earth orbit alongside the International Space Station.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_jwst_01",
+        "content": "The James Webb Space Telescope was launched in December 2021 and resides at the Sun-Earth L2 Lagrange point 1.5 million km from Earth."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "entity_swap_and_temporal",
+    "notes": "Conflates Hubble launch year (1990) and low Earth orbit with JWST."
+  },
+  {
+    "id": "ragtruth_bio_27",
+    "source_benchmark": "RAGTruth",
+    "domain": "Microbiology / Immunology",
+    "query": "What type of pathogen causes tuberculosis and which organ is primarily infected?",
+    "response": "Tuberculosis is caused by the bacterium Mycobacterium tuberculosis and most commonly attacks the lungs.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_tb_01",
+        "content": "Tuberculosis (TB) is a contagious disease caused by Mycobacterium tuberculosis, an obligate aerobic bacterium. While TB can affect almost any part of the body, pulmonary tuberculosis primarily targets the lungs."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Grounded microbiological etiology."
+  },
+  {
+    "id": "ragtruth_bio_28",
+    "source_benchmark": "RAGTruth",
+    "domain": "Microbiology / Immunology",
+    "query": "What type of pathogen causes tuberculosis and which organ is primarily infected?",
+    "response": "Tuberculosis is caused by an airborne retrovirus that predominantly causes chronic renal failure in the kidneys.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_tb_01",
+        "content": "Tuberculosis is an infectious bacterial disease caused by Mycobacterium tuberculosis. It primarily affects the lungs and is spread through airborne droplets."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "biological_inversion",
+    "notes": "Claims virus instead of bacterium, and kidney failure instead of lungs."
+  },
+  {
+    "id": "factscore_comp_29",
+    "source_benchmark": "FActScore",
+    "domain": "Computing / Software Engineering",
+    "query": "Who developed the Linux operating system kernel and when was it first released?",
+    "response": "Linus Torvalds created the Linux kernel in 1991 while studying at the University of Helsinki.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_linux_01",
+        "content": "Linux was conceived and created in 1991 by Finnish computer science student Linus Torvalds at the University of Helsinki. The initial version 0.01 was published in September 1991."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Accurate multi-predicate biographical assertion."
+  },
+  {
+    "id": "factscore_comp_30",
+    "source_benchmark": "FActScore",
+    "domain": "Computing / Software Engineering",
+    "query": "Who developed the Linux operating system kernel and when was it first released?",
+    "response": "Linus Torvalds created Linux in 1991, but Apple acquired exclusive proprietary copyright over the code in 1998.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_linux_01",
+        "content": "Linus Torvalds created the Linux kernel in 1991. Linux was released under the GNU General Public License (GPL) and remains free open-source software."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "partial_extrinsic",
+    "notes": "First clause is factual; second clause fabricates proprietary acquisition by Apple."
+  },
+  {
+    "id": "faithbench_date_31",
+    "source_benchmark": "FaithBench",
+    "domain": "History / Treaties",
+    "query": "When was the Treaty of Versailles signed?",
+    "response": "The Treaty of Versailles was officially signed on 28 June 1919 in the Hall of Mirrors at Versailles, France.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_treaty_01",
+        "content": "The Treaty of Versailles was the primary treaty that brought World War I to an end. It was signed on 28 June 1919 in the Hall of Mirrors at the Palace of Versailles."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Exact historical date and location."
+  },
+  {
+    "id": "faithbench_date_32",
+    "source_benchmark": "FaithBench",
+    "domain": "History / Treaties",
+    "query": "When was the Treaty of Versailles signed?",
+    "response": "The Treaty of Versailles was signed in November 1945 following the conclusion of the Potsdam Conference.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_treaty_01",
+        "content": "The Treaty of Versailles ended the state of war between Germany and the Allied Powers on 28 June 1919."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "temporal_shift",
+    "notes": "Alters WWI 1919 treaty date to post-WWII 1945."
+  },
+  {
+    "id": "ragtruth_chem_33",
+    "source_benchmark": "RAGTruth",
+    "domain": "Chemistry / Materials Science",
+    "query": "What is graphene and what are its notable electrical properties?",
+    "response": "Graphene is a two-dimensional allotrope of carbon consisting of a single layer of carbon atoms in a hexagonal honeycomb lattice, notable for its exceptional electrical and thermal conductivity.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_graph_01",
+        "content": "Graphene is an allotrope of carbon consisting of a single layer of atoms arranged in a two-dimensional honeycomb lattice. It exhibits ballistic electron transport and extraordinarily high electrical and thermal conductivity."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Precise chemical and physical properties."
+  },
+  {
+    "id": "ragtruth_chem_34",
+    "source_benchmark": "RAGTruth",
+    "domain": "Chemistry / Materials Science",
+    "query": "What is graphene and what are its notable electrical properties?",
+    "response": "Graphene is an inorganic silicate compound that behaves as a complete electrical insulator at ambient temperatures.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_graph_01",
+        "content": "Graphene is a carbon allotrope forming a 2D planar sheet. It is recognized as one of the best known electrical conductors."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "scientific_contradiction",
+    "notes": "Claims silicate insulator instead of carbon conductor."
+  },
+  {
+    "id": "halueval_env_35",
+    "source_benchmark": "HaluEval",
+    "domain": "Earth Science / Climate",
+    "query": "What percentage of Earth's surface is covered by oceans?",
+    "response": "Oceans cover roughly 71 percent of the Earth's surface and contain over 96 percent of all planetary water.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_ocean_01",
+        "content": "Water covers approximately 71 percent of the Earth's surface, with the global ocean holding about 96.5 percent of all Earth's water."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Consistent physical geography statistics."
+  },
+  {
+    "id": "halueval_env_36",
+    "source_benchmark": "HaluEval",
+    "domain": "Earth Science / Climate",
+    "query": "What percentage of Earth's surface is covered by oceans?",
+    "response": "Oceans cover approximately 35 percent of Earth's surface, with arid desert landforms comprising the remaining 65 percent.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_ocean_01",
+        "content": "The oceans cover about 71 percent of the Earth's surface, with land masses covering only 29 percent."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "numerical_fabrication",
+    "notes": "Drastic numerical alteration from 71% to 35%."
+  },
+  {
+    "id": "ragtruth_sports_37",
+    "source_benchmark": "RAGTruth",
+    "domain": "Sports / Olympic History",
+    "query": "Where were the 2024 Summer Olympic Games held?",
+    "response": "The 2024 Summer Olympics took place primarily in Paris, France, from July 26 to August 11, 2024.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_olympic_01",
+        "content": "The 2024 Summer Olympics, officially the Games of the XXXIII Olympiad, were celebrated in Paris, France, from 26 July to 11 August 2024."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Accurate host city and date range."
+  },
+  {
+    "id": "ragtruth_sports_38",
+    "source_benchmark": "RAGTruth",
+    "domain": "Sports / Olympic History",
+    "query": "Where were the 2024 Summer Olympic Games held?",
+    "response": "The 2024 Summer Olympic Games were hosted in Tokyo, Japan, following the cancellation of the European bid.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_olympic_01",
+        "content": "Paris, France, served as the primary host city for the 2024 Summer Olympic Games."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "entity_swap_and_temporal",
+    "notes": "Swaps host city from Paris to Tokyo."
+  },
+  {
+    "id": "faithbench_med_39",
+    "source_benchmark": "FaithBench",
+    "domain": "Medicine / Cardiology",
+    "query": "What is normal resting blood pressure for a healthy adult?",
+    "response": "A normal resting blood pressure for healthy adults is typically defined as a systolic reading below 120 mm Hg and a diastolic reading below 80 mm Hg.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_bp_01",
+        "content": "Normal resting blood pressure for a healthy adult is categorized as systolic pressure of less than 120 mm Hg and diastolic pressure of less than 80 mm Hg."
+      }
+    ],
+    "ground_truth_label": "grounded",
+    "hallucination_type": "none",
+    "notes": "Standard clinical thresholds preserved."
+  },
+  {
+    "id": "faithbench_med_40",
+    "source_benchmark": "FaithBench",
+    "domain": "Medicine / Cardiology",
+    "query": "What is normal resting blood pressure for a healthy adult?",
+    "response": "Normal adult resting blood pressure requires systolic pressure to exceed 160 mm Hg to maintain sufficient arterial perfusion.",
+    "chunks": [
+      {
+        "chunk_id": "chunk_bp_01",
+        "content": "Normal blood pressure is defined as systolic pressure below 120 mm Hg. Systolic readings above 140 mm Hg are classified as Stage 2 Hypertension."
+      }
+    ],
+    "ground_truth_label": "hallucinated",
+    "hallucination_type": "biological_inversion",
+    "notes": "Inverts safety parameter; states 160 mm Hg (severe hypertension) is required normal baseline."
+  }
+]
