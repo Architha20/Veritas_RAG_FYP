@@ -1,0 +1,9 @@
+VeritasRAG Clinical Pharmacology Reference: Ibuprofen
+
+Ibuprofen is a nonsteroidal anti-inflammatory drug (NSAID) derived from propionic acid.
+It was discovered by Stewart Adams and John Nicholson in 1961 at the research department of the Boots Group in the United Kingdom.
+The standard adult oral dosage for mild to moderate pain is 200 mg to 400 mg every 4 to 6 hours as needed.
+The maximum recommended over-the-counter daily dose should not exceed 1200 mg in 24 hours unless directed by a licensed physician.
+Prescription-strength formulations may reach up to 3200 mg daily divided into multiple doses under strict clinical supervision.
+Common indications include headache, dental pain, primary dysmenorrhea, muscular aches, and fever reduction.
+Possible adverse reactions include gastrointestinal distress, dyspepsia, and increased cardiovascular risks with prolonged high-dose usage.

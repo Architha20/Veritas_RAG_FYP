@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veritas - Document Intelligence & Grounding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-app: #f8fafc;
+      --bg-sidebar: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-input: #ffffff;
+      --bg-panel: #ffffff;
+      --border-color: #e2e8f0;
+      --border-focus: #3b82f6;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-sub: #94a3b8;
+      --btn-primary-bg: #0f172a;
+      --btn-primary-text: #ffffff;
+      --user-bubble-bg: #3b82f6;
+      --user-bubble-text: #ffffff;
+      --bot-bubble-bg: #ffffff;
+      --hover-bg: #e2e8f0;
+      --chip-bg: #ffffff;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+      --source-bg: #f8fafc;
+      --source-border: #cbd5e1;
+    }
+
+    [data-theme="dark"] {
+      --bg-app: #0b0f19;
+      --bg-sidebar: #0f172a;
+      --bg-card: #151d2f;
+      --bg-input: #131b2e;
+      --bg-panel: #111827;
+      --border-color: #1e293b;
+      --border-focus: #3b82f6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-sub: #64748b;
+      --btn-primary-bg: #3b82f6;
+      --btn-primary-text: #ffffff;
+      --user-bubble-bg: #2563eb;
+      --user-bubble-text: #ffffff;
+      --bot-bubble-bg: #151d2f;
+      --hover-bg: #1e293b;
+      --chip-bg: #151d2f;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.5);
+      --shadow-lg: 0 10px 30px rgba(0,0,0,0.6);
+      --source-bg: #0c1220;
+      --source-border: #334155;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-app);
+      color: var(--text-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+    }
+
+    /* Overall App Layout */
+    .app-layout {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ====================================================
+       1. LEFT SIDEBAR (ChatGPT style Sessions & Docs)
+       ==================================================== */
+    .sidebar {
+      width: 270px;
+      min-width: 270px;
+      height: 100%;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, margin-left 0.25s ease;
+      z-index: 40;
+    }
+    .sidebar.collapsed {
+      margin-left: -270px;
+    }
+
+    .sidebar-header {
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+    .brand-avatar {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #fff;
+      font-size: 1rem;
+    }
+    .brand-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+    }
+    .brand-tag {
+      font-size: 0.65rem;
+      background: rgba(59, 130, 246, 0.15);
+      color: #3b82f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* New Chat Button */
+    .sidebar-actions {
+      padding: 14px 16px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn-new-chat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-new-chat:hover {
+      border-color: #3b82f6;
+      background: var(--hover-bg);
+      transform: translateY(-1px);
+    }
+
+    /* Active Document Card */
+    .doc-sidebar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .doc-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+    .doc-card-body {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .doc-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 6px #10b981;
+      flex-shrink: 0;
+    }
+    .doc-card-body span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .btn-upload-switch {
+      font-size: 0.75rem;
+      color: #3b82f6;
+      background: none;
+      border: none;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      padding-top: 4px;
+    }
+    .btn-upload-switch:hover {
+      text-decoration: underline;
+    }
+
+    /* Sessions List */
+    .sidebar-section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      padding: 14px 16px 6px;
+    }
+    .sessions-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 10px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .session-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .session-item:hover {
+      background: var(--hover-bg);
+      color: var(--text-main);
+    }
+    .session-item.active {
+      background: var(--hover-bg);
+      color: var(--text-main);
+      font-weight: 600;
+    }
+    .session-title-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+    .session-del-btn {
+      opacity: 0;
+      font-size: 0.8rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 2px 4px;
+      transition: opacity 0.15s;
+    }
+    .session-item:hover .session-del-btn {
+      opacity: 1;
+    }
+    .session-del-btn:hover {
+      color: #ef4444;
+    }
+
+    /* Sidebar Footer */
+    .sidebar-footer {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .theme-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--hover-bg);
+      color: var(--text-main);
+    }
+
+    /* ====================================================
+       2. CENTER MAIN CHAT SECTION (ChatGPT Web Experience)
+       ==================================================== */
+    .main-chat {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-app);
+    }
+
+    /* Chat Topbar */
+    .chat-topbar {
+      height: 56px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      background: var(--bg-app);
+      z-index: 20;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sidebar-toggle-btn {
+      background: none;
+      border: none;
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .sidebar-toggle-btn:hover {
+      background: var(--hover-bg);
+      color: var(--text-main);
+    }
+    .current-doc-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+    .current-doc-pill:hover {
+      border-color: #3b82f6;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-inspector-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 6px 13px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-inspector-toggle:hover {
+      border-color: #3b82f6;
+      background: var(--hover-bg);
+    }
+    .btn-inspector-toggle.active {
+      background: #3b82f6;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+
+    /* Scrollable Chat Feed */
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 20px 140px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .messages-inner {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    /* Welcome Hero (Empty State) */
+    .welcome-hero {
+      margin: auto 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px 20px;
+      gap: 16px;
+    }
+    .welcome-avatar {
+      width: 54px;
+      height: 54px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: #ffffff;
+      font-weight: 800;
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+    }
+    .welcome-hero h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .welcome-hero p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.6;
+    }
+
+    /* Suggestion Chips */
+    .suggestion-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      max-width: 600px;
+      margin-top: 10px;
+    }
+    .chip-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.83rem;
+      color: var(--text-main);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .chip-btn:hover {
+      border-color: #3b82f6;
+      background: var(--hover-bg);
+      transform: translateY(-1px);
+    }
+
+    /* Message Rows */
+    .msg-row {
+      display: flex;
+      gap: 14px;
+      width: 100%;
+    }
+    .msg-row.user {
+      justify-content: flex-end;
+    }
+    .user-bubble {
+      max-width: 80%;
+      background: var(--user-bubble-bg);
+      color: var(--user-bubble-text);
+      padding: 12px 18px;
+      border-radius: 18px 18px 4px 18px;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      font-weight: 500;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .bot-card {
+      max-width: 92%;
+      background: var(--bot-bubble-bg);
+      border: 1px solid var(--border-color);
+      padding: 16px 18px;
+      border-radius: 18px 18px 18px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    .bot-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #ffffff;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .answer-text {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-main);
+    }
+
+    /* Sentence Level Highlight Overlays */
+    .sentence-span {
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: all 0.15s ease;
+      position: relative;
+      cursor: pointer;
+    }
+    .sentence-span.grounded {
+      border-bottom: 2px solid #10b981;
+    }
+    .sentence-span.grounded:hover {
+      background: rgba(16, 185, 129, 0.12);
+    }
+    .sentence-span.inferred {
+      border-bottom: 2px solid #f59e0b;
+    }
+    .sentence-span.inferred:hover {
+      background: rgba(245, 158, 11, 0.12);
+    }
+    .sentence-span.hallucinated {
+      border-bottom: 2px solid #ef4444;
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      font-weight: 600;
+    }
+    .sentence-span.hallucinated:hover {
+      background: rgba(239, 68, 68, 0.22);
+    }
+
+    /* Bottom Inspector Action Bar inside Bot Card */
+    .bot-action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 10px;
+      flex-wrap: wrap;
+    }
+    .bot-metrics-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .metric-pill {
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .metric-pill.grounded { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    .metric-pill.partially_grounded { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+    .metric-pill.hallucinated { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+    .btn-inspect-evidence {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: #3b82f6;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+    .btn-inspect-evidence:hover {
+      background: #3b82f6;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+
+    /* Pinned Bottom Input Capsule */
+    .chat-input-area {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px 20px 22px;
+      background: linear-gradient(180deg, transparent 0%, var(--bg-app) 35%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 30;
+      backdrop-filter: blur(8px);
+    }
+    .chat-input-box {
+      width: 100%;
+      max-width: 800px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-md);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .chat-input-box:focus-within {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .btn-plus-attach {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--hover-bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      font-size: 1.25rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .btn-plus-attach:hover {
+      border-color: #3b82f6;
+      color: var(--text-main);
+      transform: scale(1.06);
+    }
+
+    /* Approach Selector in Input Bar */
+    .approach-dropdown-wrap {
+      position: relative;
+    }
+    .approach-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--hover-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .approach-btn:hover {
+      border-color: #3b82f6;
+    }
+
+    .trigger-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.72rem;
+      padding: 1px 6px;
+      border-radius: 5px;
+      line-height: 1.2;
+    }
+    .trigger-badge.badge-a { background: #3b82f6; color: #fff; }
+    .trigger-badge.badge-b { background: #8b5cf6; color: #fff; }
+    .trigger-badge.badge-c { background: #10b981; color: #fff; }
+    .trigger-badge.badge-bc { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; }
+
+    /* Approach Dropdown Popover */
+    .approach-panel {
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 0;
+      width: 360px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: var(--shadow-lg);
+      z-index: 100;
+      display: none;
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .panel-section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .panel-subtext {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.35;
+    }
+    .approach-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .approach-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      border: 1px solid transparent;
+    }
+    .approach-option:hover {
+      background: var(--hover-bg);
+    }
+    .approach-option.active {
+      background: var(--hover-bg);
+      border-color: #3b82f6;
+    }
+    .letter-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.82rem;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+    .letter-badge.badge-a { background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1.5px solid rgba(59, 130, 246, 0.35); }
+    .letter-badge.badge-b { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; border: 1.5px solid rgba(139, 92, 246, 0.35); }
+    .letter-badge.badge-c { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1.5px solid rgba(16, 185, 129, 0.35); }
+    .letter-badge.badge-bc { background: rgba(99, 102, 241, 0.15); color: #6366f1; border: 1.5px solid rgba(99, 102, 241, 0.35); }
+    .approach-option.active .letter-badge.badge-a { background: #3b82f6; color: #fff; }
+    .approach-option.active .letter-badge.badge-b { background: #8b5cf6; color: #fff; }
+    .approach-option.active .letter-badge.badge-c { background: #10b981; color: #fff; }
+    .approach-option.active .letter-badge.badge-bc { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; }
+    .opt-info { flex: 1; }
+    .opt-title {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-rec {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: #e0e7ff;
+      color: #4338ca;
+      text-transform: uppercase;
+    }
+    .opt-desc {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+
+    .main-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      background: transparent;
+      min-width: 140px;
+    }
+    .main-input::placeholder {
+      color: var(--text-sub);
+    }
+    .btn-send {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .btn-send:hover {
+      background: #3b82f6;
+      transform: scale(1.05);
+    }
+    .btn-send:disabled {
+      background: var(--border-color);
+      color: var(--text-muted);
+      cursor: not-allowed;
+      transform: none;
+    }
+    .input-disclaimer {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      text-align: center;
+    }
+
+    /* ====================================================
+       3. RIGHT SIDE PANEL (Grounding & Evidence Inspector)
+       ==================================================== */
+    .inspector-panel {
+      width: 390px;
+      min-width: 390px;
+      height: 100%;
+      background: var(--bg-panel);
+      border-left: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, margin-right 0.25s ease;
+      z-index: 40;
+    }
+    .inspector-panel.collapsed {
+      margin-right: -390px;
+    }
+
+    .inspector-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .inspector-title-wrap h3 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .inspector-title-wrap p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .btn-close-inspector {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+    .btn-close-inspector:hover {
+      background: var(--hover-bg);
+      color: var(--text-main);
+    }
+
+    .inspector-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .inspector-empty {
+      margin: auto 0;
+      text-align: center;
+      padding: 30px 10px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .inspector-empty-icon {
+      font-size: 2.2rem;
+      opacity: 0.6;
+    }
+
+    /* Inspector Score Hero Card */
+    .inspect-score-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    .score-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .score-number-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .score-number {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .score-number.grounded { color: #10b981; }
+    .score-number.partially_grounded { color: #f59e0b; }
+    .score-number.hallucinated { color: #ef4444; }
+    .score-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .inspect-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      padding-top: 10px;
+    }
+
+    /* Inspector Section Header */
+    .inspect-section-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    /* Sentence Analysis List in Inspector */
+    .sentence-inspect-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .sentence-inspect-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+    .sentence-inspect-item.grounded { border-left: 3px solid #10b981; }
+    .sentence-inspect-item.inferred { border-left: 3px solid #f59e0b; }
+    .sentence-inspect-item.hallucinated { border-left: 3px solid #ef4444; background: rgba(239, 68, 68, 0.05); }
+
+    .sentence-inspect-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .sentence-status-tag {
+      padding: 1px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .sentence-status-tag.grounded { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    .sentence-status-tag.inferred { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+    .sentence-status-tag.hallucinated { background: #ef4444; color: #ffffff; }
+
+    /* Source Chunks in Inspector */
+    .chunks-inspect-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .chunk-card {
+      background: var(--source-bg);
+      border: 1px solid var(--source-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .chunk-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .chunk-card-text {
+      font-size: 0.84rem;
+      line-height: 1.5;
+      color: var(--text-main);
+      background: rgba(0, 0, 0, 0.03);
+      padding: 8px 10px;
+      border-radius: 6px;
+    }
+    [data-theme="dark"] .chunk-card-text {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Modal for Upload */
+    .upload-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .upload-modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .upload-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .upload-dropzone {
+      border: 2px dashed var(--border-color);
+      border-radius: 12px;
+      padding: 30px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .upload-dropzone:hover {
+      border-color: #3b82f6;
+      background: var(--hover-bg);
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--border-color);
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Responsiveness */
+    @media (max-width: 900px) {
+      .sidebar { position: absolute; z-index: 50; }
+      .sidebar.collapsed { margin-left: -270px; }
+      .inspector-panel { position: absolute; right: 0; z-index: 50; }
+      .inspector-panel.collapsed { margin-right: -390px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- ====================================================
+         1. LEFT SIDEBAR: Sessions & Active Document
+         ==================================================== -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <a href="/" class="brand-group">
+          <div class="brand-avatar">V</div>
+          <div>
+            <div class="brand-title">Veritas</div>
+            <div style="font-size: 0.68rem; color: var(--text-muted);">Grounding Layer</div>
+          </div>
+        </a>
+        <span class="brand-tag">v1.0</span>
+      </div>
+
+      <div class="sidebar-actions">
+        <!-- New Chat Button -->
+        <button class="btn-new-chat" onclick="startNewChat()">
+          <span style="font-size: 1.1rem; line-height: 1;">+</span>
+          <span>New chat</span>
+        </button>
+
+        <!-- Active Document Card -->
+        <div class="doc-sidebar-card">
+          <div class="doc-card-top">
+            <span>Active Document</span>
+            <span id="docStatusDot" class="doc-dot"></span>
+          </div>
+          <div class="doc-card-body">
+            <span>📄</span>
+            <span id="docSidebarTitle">Loading document...</span>
+          </div>
+          <button class="btn-upload-switch" onclick="openUploadModal()">Change / Upload Document ➔</button>
+        </div>
+      </div>
+
+      <!-- Chat Sessions List -->
+      <div class="sidebar-section-title">Chat Sessions</div>
+      <div id="sessionsList" class="sessions-list">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <button id="themeToggleBtn" class="theme-toggle-btn" onclick="toggleTheme()">
+          <span id="themeIcon">☀️</span>
+          <span id="themeLabel">Light Mode</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ====================================================
+         2. CENTER MAIN CHAT SECTION
+         ==================================================== -->
+    <main class="main-chat">
+      <!-- Topbar -->
+      <header class="chat-topbar">
+        <div class="topbar-left">
+          <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar">☰</button>
+          <div class="current-doc-pill" onclick="openUploadModal()" title="Click to view or change active document">
+            <span>📄</span>
+            <span id="topbarDocTitle">sample_doc.txt</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button id="inspectorToggleBtn" class="btn-inspector-toggle active" onclick="toggleInspector()" title="Toggle Right Side Panel">
+            <span>📊</span>
+            <span>Inspection Panel</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Scrollable Chat Feed -->
+      <div id="chatMessages" class="chat-messages">
+        <div id="messagesInner" class="messages-inner">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Pinned Bottom Input Capsule -->
+      <div class="chat-input-area">
+        <div class="chat-input-box">
+          <!-- + File Attachment Button -->
+          <button class="btn-plus-attach" onclick="openUploadModal()" title="Attach or replace document">+</button>
+          <input type="file" id="directFileInput" accept=".pdf,.docx,.txt" style="display:none" onchange="handleDirectFile(this)">
+
+          <!-- Verification Approach Indicator (Approach A only in Web UI) -->
+          <div class="approach-dropdown-wrap">
+            <button id="approachBtn" class="approach-btn" style="cursor: default;" title="Web UI uses Approach A (Embedding Similarity). Use the terminal CLI to test all approaches.">
+              <span id="approachBadge" class="trigger-badge badge-a">A</span>
+              <span id="approachLabel">Approach A: Embedding Similarity</span>
+            </button>
+            <div id="approachPanel" style="display:none;"></div>
+          </div>
+
+          <!-- Main Input Field -->
+          <input
+            type="text"
+            id="questionInput"
+            class="main-input"
+            placeholder="Ask anything about your document..."
+            onkeydown="if(event.key==='Enter') sendMessage()"
+          />
+
+          <!-- Send Button -->
+          <button id="sendBtn" class="btn-send" onclick="sendMessage()" title="Send question">
+            ➔
+          </button>
+        </div>
+
+        <div class="input-disclaimer">
+          VeritasRAG • Real-Time Hallucination Flagging Layer • Inspect evidence anytime in the side panel
+        </div>
+      </div>
+    </main>
+
+    <!-- ====================================================
+         3. RIGHT SIDE PANEL: Dedicated Evidence & Inspector
+         ==================================================== -->
+    <aside id="inspectorPanel" class="inspector-panel">
+      <div class="inspector-header">
+        <div class="inspector-title-wrap">
+          <h3><span>🔍</span> Grounding Inspector</h3>
+          <p>Sentence validation & source document evidence</p>
+        </div>
+        <button class="btn-close-inspector" onclick="toggleInspector()" title="Close side panel">✕</button>
+      </div>
+
+      <div id="inspectorBody" class="inspector-body">
+        <div class="inspector-empty">
+          <div class="inspector-empty-icon">📖</div>
+          <div style="font-weight: 600; font-size: 0.95rem;">No Evidence Loaded</div>
+          <div style="font-size: 0.8rem; line-height: 1.4;">Ask a question in chat or click "View Evidence & Inspection" on any answer to inspect details here.</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Upload Modal -->
+  <div id="uploadModal" class="upload-modal" onclick="if(event.target===this) closeUploadModal()">
+    <div class="upload-modal-content">
+      <div class="upload-modal-header">
+        <h3 style="font-size: 1.1rem; font-weight: 700;">Upload Document</h3>
+        <button class="btn-close-inspector" onclick="closeUploadModal()">✕</button>
+      </div>
+      <p style="font-size: 0.84rem; color: var(--text-muted);">Upload a PDF, Word (.docx), or plain text (.txt) document. Veritas will index it for offline question answering.</p>
+      
+      <div class="upload-dropzone" onclick="document.getElementById('modalFileInput').click()">
+        <input type="file" id="modalFileInput" accept=".pdf,.docx,.txt" style="display:none" onchange="uploadFileFromModal(this)">
+        <div style="font-size: 2rem; margin-bottom: 6px;">📄</div>
+        <div style="font-weight: 600; font-size: 0.92rem;">Click to select a file</div>
+        <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">Supports PDF, DOCX, TXT</div>
+      </div>
+
+      <div id="modalUploadProgress" style="display:none; align-items:center; gap:8px; font-size:0.85rem; color: #3b82f6;">
+        <span class="spinner"></span> Reading & preparing document chunks...
+      </div>
+      <div id="modalUploadMsg" style="display:none; font-size:0.85rem; padding: 10px; border-radius: 8px;"></div>
+    </div>
+  </div>
+
+  <script>
+    // App State — Web UI is locked to Approach A (Embedding Similarity)
+    // Use the terminal CLI (veritas_cli.py) to test Approaches B, C, and Hybrid
+    let currentApproach = 'embedding';
+    let currentApproachFullName = 'Approach A: Embedding Similarity (MiniLM)';
+    let currentApproachLetter = 'A';
+    let activeInspectionData = null;
+
+    // Chat Sessions State
+    let sessions = [];
+    let currentSessionId = null;
+
+    function initTheme() {
+      const saved = localStorage.getItem('veritas_theme');
+      if (saved === 'light' || (!saved && window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        setTheme('light');
+      } else {
+        setTheme('dark');
+      }
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    }
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('veritas_theme', theme);
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+      if (label) label.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+    }
+
+    // Sidebar & Inspector toggles
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('collapsed');
+    }
+
+    function toggleInspector() {
+      const panel = document.getElementById('inspectorPanel');
+      const btn = document.getElementById('inspectorToggleBtn');
+      panel.classList.toggle('collapsed');
+      const isClosed = panel.classList.contains('collapsed');
+      if (btn) btn.classList.toggle('active', !isClosed);
+    }
+
+    function ensureInspectorOpen() {
+      const panel = document.getElementById('inspectorPanel');
+      const btn = document.getElementById('inspectorToggleBtn');
+      if (panel.classList.contains('collapsed')) {
+        panel.classList.remove('collapsed');
+        if (btn) btn.classList.add('active');
+      }
+    }
+
+    // Approach selector
+    function toggleApproachPanel(event) {
+      event.stopPropagation();
+      const panel = document.getElementById('approachPanel');
+      panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function selectApproach(approach, letter, shortLabel, fullLabel) {
+      currentApproach = approach;
+      currentApproachFullName = fullLabel;
+      currentApproachLetter = letter;
+
+      const badgeEl = document.getElementById('approachBadge');
+      if (badgeEl) {
+        badgeEl.textContent = letter;
+        badgeEl.className = 'trigger-badge ' + (approach === 'embedding' ? 'badge-a' : approach === 'nli' ? 'badge-b' : approach === 'atomic' ? 'badge-c' : 'badge-bc');
+      }
+      document.getElementById('approachLabel').textContent = shortLabel;
+
+      document.querySelectorAll('.approach-option').forEach(el => {
+        el.classList.toggle('active', el.getAttribute('data-approach') === approach);
+      });
+
+      document.getElementById('approachPanel').style.display = 'none';
+    }
+
+    document.addEventListener('click', () => {
+      const panel = document.getElementById('approachPanel');
+      if (panel) panel.style.display = 'none';
+    });
+
+    // Session Management
+    function loadSessions() {
+      try {
+        const stored = localStorage.getItem('veritas_chat_sessions');
+        sessions = stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        sessions = [];
+      }
+
+      if (!sessions.length) {
+        startNewChat();
+      } else {
+        currentSessionId = sessions[0].id;
+        renderSessionsList();
+        renderActiveChat();
+      }
+    }
+
+    function saveSessions() {
+      try {
+        localStorage.setItem('veritas_chat_sessions', JSON.stringify(sessions));
+      } catch (e) {}
+    }
+
+    function startNewChat() {
+      const newId = 'session_' + Date.now();
+      const newSession = {
+        id: newId,
+        title: 'New conversation',
+        createdAt: new Date().toISOString(),
+        messages: []
+      };
+      sessions.unshift(newSession);
+      currentSessionId = newId;
+      saveSessions();
+      renderSessionsList();
+      renderActiveChat();
+    }
+
+    function switchSession(id) {
+      currentSessionId = id;
+      renderSessionsList();
+      renderActiveChat();
+    }
+
+    function deleteSession(event, id) {
+      event.stopPropagation();
+      sessions = sessions.filter(s => s.id !== id);
+      if (!sessions.length) {
+        startNewChat();
+      } else {
+        if (currentSessionId === id) currentSessionId = sessions[0].id;
+        saveSessions();
+        renderSessionsList();
+        renderActiveChat();
+      }
+    }
+
+    function renderSessionsList() {
+      const list = document.getElementById('sessionsList');
+      list.innerHTML = '';
+      sessions.forEach(s => {
+        const item = document.createElement('div');
+        item.className = 'session-item' + (s.id === currentSessionId ? ' active' : '');
+        item.onclick = () => switchSession(s.id);
+        item.innerHTML = `
+          <span class="session-title-text">${escapeHtml(s.title)}</span>
+          <button class="session-del-btn" onclick="deleteSession(event, '${s.id}')" title="Delete chat">🗑️</button>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    function getActiveSession() {
+      return sessions.find(s => s.id === currentSessionId);
+    }
+
+    function renderActiveChat() {
+      const session = getActiveSession();
+      const container = document.getElementById('messagesInner');
+      container.innerHTML = '';
+
+      if (!session || !session.messages.length) {
+        // Render Empty State Hero
+        container.innerHTML = `
+          <div class="welcome-hero">
+            <div class="welcome-avatar">V</div>
+            <h2>How can I help with your document?</h2>
+            <p>Ask anything about the active document. Veritas synthesizes answers directly and runs <strong>Approach A (Embedding Similarity)</strong> verification on every sentence. Use the terminal CLI to test all approaches.</p>
+            <div class="suggestion-chips">
+              <button class="chip-btn" onclick="askPreset('What is the recommended adult dosage of ibuprofen?')">💊 Recommended adult dosage?</button>
+              <button class="chip-btn" onclick="askPreset('Who discovered ibuprofen and when?')">🔍 Who discovered it and when?</button>
+              <button class="chip-btn" onclick="askPreset('What are common indications and adverse reactions?')">⚠️ Indications & adverse risks?</button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      session.messages.forEach((msg, idx) => {
+        if (msg.role === 'user') {
+          const row = document.createElement('div');
+          row.className = 'msg-row user';
+          row.innerHTML = `<div class="user-bubble">${escapeHtml(msg.text)}</div>`;
+          container.appendChild(row);
+        } else {
+          const row = document.createElement('div');
+          row.className = 'msg-row';
+          const card = renderAssistantCard(msg, idx);
+          row.appendChild(card);
+          container.appendChild(row);
+        }
+      });
+
+      scrollChatToBottom();
+    }
+
+    function renderAssistantCard(msg, msgIndex) {
+      const card = document.createElement('div');
+      card.className = 'bot-card';
+
+      // Build Answer HTML with sentence overlays
+      let answerHtml = '';
+      if (msg.verifData && msg.verifData.sentence_overlays && msg.verifData.sentence_overlays.length > 0) {
+        answerHtml = msg.verifData.sentence_overlays.map(s => {
+          const infType = s.inference_type || 'grounded';
+          return `<span class="sentence-span ${infType}" title="${infType.toUpperCase()}: ${s.grounding_score}% support">${escapeHtml(s.sentence)}</span> `;
+        }).join('');
+      } else {
+        answerHtml = escapeHtml(msg.text);
+      }
+
+      // Build Status Bar inside card
+      let statusBarHtml = '';
+      if (msg.verifData) {
+        const d = msg.verifData;
+        const cls = d.overall_classification || 'grounded';
+        let clsLabel = 'Grounded';
+        if (cls === 'partially_grounded') clsLabel = 'Partially Grounded';
+        if (cls === 'hallucinated') clsLabel = 'Hallucinated';
+
+        let badgeLetter = 'B+C';
+        let badgeClass = 'badge-bc';
+        if (d.approach === 'embedding') { badgeLetter = 'A'; badgeClass = 'badge-a'; }
+        else if (d.approach === 'nli') { badgeLetter = 'B'; badgeClass = 'badge-b'; }
+        else if (d.approach === 'atomic') { badgeLetter = 'C'; badgeClass = 'badge-c'; }
+
+        statusBarHtml = `
+          <div class="bot-action-bar">
+            <div class="bot-metrics-group">
+              <span class="metric-pill ${cls}">
+                <span>${cls === 'grounded' ? '🟢' : cls === 'partially_grounded' ? '🟠' : '🔴'}</span>
+                <span>${clsLabel} (${d.overall_grounding_score}%)</span>
+              </span>
+              <span class="metric-pill" style="background:var(--hover-bg); color:var(--text-muted);">
+                <span class="trigger-badge ${badgeClass}" style="font-size:0.65rem; padding:1px 5px;">${badgeLetter}</span>
+                <span>${d.processing_time_ms}ms</span>
+              </span>
+            </div>
+            <button class="btn-inspect-evidence" onclick="inspectMessage(${msgIndex})">
+              <span>📊 View Evidence & Inspection (${(d.chunks || []).length} chunks) ➔</span>
+            </button>
+          </div>
+        `;
+      }
+
+      card.innerHTML = `
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+          <div class="bot-avatar">V</div>
+          <div style="flex:1;">
+            <div class="answer-text">${answerHtml}</div>
+          </div>
+        </div>
+        ${statusBarHtml}
+      `;
+      return card;
+    }
+
+    function scrollChatToBottom() {
+      const container = document.getElementById('chatMessages');
+      setTimeout(() => { container.scrollTop = container.scrollHeight; }, 30);
+    }
+
+    function askPreset(question) {
+      document.getElementById('questionInput').value = question;
+      sendMessage();
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('questionInput');
+      const btn = document.getElementById('sendBtn');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const session = getActiveSession();
+      if (!session) return;
+
+      // Update title on first question
+      if (session.messages.length === 0) {
+        session.title = text.length > 28 ? text.substring(0, 28) + '...' : text;
+        renderSessionsList();
+      }
+
+      // Add user message
+      session.messages.push({ role: 'user', text: text });
+      input.value = '';
+      btn.disabled = true;
+
+      // Add placeholder assistant loading message
+      const loadingIdx = session.messages.length;
+      session.messages.push({
+        role: 'assistant',
+        text: 'Analyzing document and verifying claims with Approach ' + currentApproachLetter + '...',
+        verifData: null
+      });
+      saveSessions();
+      renderActiveChat();
+
+      try {
+        const res = await fetch('/api/v1/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: text, approach: currentApproach })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'Request failed');
+
+        // Update assistant message with verified answer
+        session.messages[loadingIdx] = {
+          role: 'assistant',
+          text: data.response,
+          verifData: data
+        };
+        saveSessions();
+        renderActiveChat();
+
+        // Automatically populate and show in Right Side Panel!
+        loadInspectionDetails(data, text);
+        ensureInspectorOpen();
+      } catch (err) {
+        session.messages[loadingIdx] = {
+          role: 'assistant',
+          text: 'Sorry, could not complete request: ' + err.message,
+          verifData: null
+        };
+        saveSessions();
+        renderActiveChat();
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function inspectMessage(msgIndex) {
+      const session = getActiveSession();
+      if (!session || !session.messages[msgIndex]) return;
+      const msg = session.messages[msgIndex];
+      if (msg.verifData) {
+        const userMsg = session.messages[msgIndex - 1] ? session.messages[msgIndex - 1].text : 'Question';
+        loadInspectionDetails(msg.verifData, userMsg);
+        ensureInspectorOpen();
+      }
+    }
+
+    // Populate Right Side Panel with detailed evidence & metrics
+    function loadInspectionDetails(data, queryText) {
+      activeInspectionData = data;
+      const body = document.getElementById('inspectorBody');
+
+      const cls = data.overall_classification || 'grounded';
+      let clsLabel = 'Grounded';
+      let clsColor = '#10b981';
+      if (cls === 'partially_grounded') { clsLabel = 'Partially Grounded'; clsColor = '#f59e0b'; }
+      if (cls === 'hallucinated') { clsLabel = 'Hallucinated'; clsColor = '#ef4444'; }
+
+      let badgeLetter = 'B+C';
+      let badgeClass = 'badge-bc';
+      if (data.approach === 'embedding') { badgeLetter = 'A'; badgeClass = 'badge-a'; }
+      else if (data.approach === 'nli') { badgeLetter = 'B'; badgeClass = 'badge-b'; }
+      else if (data.approach === 'atomic') { badgeLetter = 'C'; badgeClass = 'badge-c'; }
+
+      // 1. Sentences breakdown HTML
+      const sentenceItemsHtml = (data.sentence_overlays || []).map((s, i) => {
+        const infType = s.inference_type || 'grounded';
+        let statusText = 'Grounded';
+        if (infType === 'inferred') statusText = 'Inferred';
+        if (infType === 'hallucinated') statusText = 'Hallucinated';
+
+        return `
+          <div class="sentence-inspect-item ${infType}">
+            <div class="sentence-inspect-header">
+              <span>Sentence #${i+1}</span>
+              <span class="sentence-status-tag ${infType}">${statusText} (${s.grounding_score}%)</span>
+            </div>
+            <div>"${escapeHtml(s.sentence)}"</div>
+          </div>
+        `;
+      }).join('');
+
+      // 2. Chunks HTML
+      const chunksHtml = (data.chunks || []).map((c, i) => {
+        return `
+          <div class="chunk-card">
+            <div class="chunk-card-header">
+              <span>[Chunk ${i+1}]</span>
+              <span>${escapeHtml(data.filename || 'Document')}</span>
+            </div>
+            <div class="chunk-card-text">"${escapeHtml(c)}"</div>
+          </div>
+        `;
+      }).join('');
+
+      body.innerHTML = `
+        <!-- Question Box -->
+        <div style="font-size:0.82rem; color:var(--text-muted); background:var(--bg-card); border:1px solid var(--border-color); border-radius:10px; padding:10px 12px;">
+          <strong>Inspected Query:</strong> ${escapeHtml(queryText || data.question)}
+        </div>
+
+        <!-- Overview Score Card -->
+        <div class="inspect-score-card">
+          <div class="score-banner">
+            <div class="score-number-wrap">
+              <div class="score-number ${cls}">${data.overall_grounding_score}%</div>
+              <div class="score-label" style="color: ${clsColor};">${clsLabel}</div>
+            </div>
+            <div class="letter-badge ${badgeClass}" style="width:42px; height:42px; font-size:1.05rem;">
+              ${badgeLetter}
+            </div>
+          </div>
+          <div class="inspect-meta-row">
+            <span><strong>Approach:</strong> ${escapeHtml(data.approach_label || currentApproachFullName)}</span>
+            <span><strong>Latency:</strong> ${data.processing_time_ms}ms</span>
+          </div>
+        </div>
+
+        <!-- Sentence-by-sentence analysis -->
+        <div>
+          <div class="inspect-section-title">
+            <span>Sentence Validation Breakdown</span>
+            <span>${(data.sentence_overlays || []).length} sentences</span>
+          </div>
+          <div class="sentence-inspect-list">
+            ${sentenceItemsHtml || '<div style="color:var(--text-muted); font-size:0.82rem;">No sentence breakdown available.</div>'}
+          </div>
+        </div>
+
+        <!-- Retrieved Source Chunks -->
+        <div>
+          <div class="inspect-section-title">
+            <span>Source Document Chunks</span>
+            <span>${(data.chunks || []).length} chunks</span>
+          </div>
+          <div class="chunks-inspect-list">
+            ${chunksHtml || '<div style="color:var(--text-muted); font-size:0.82rem;">No chunks retrieved.</div>'}
+          </div>
+        </div>
+      `;
+    }
+
+    // Document Status & Upload Handling
+    async function checkDocStatus() {
+      try {
+        const res = await fetch('/api/v1/status');
+        if (res.ok) {
+          const data = await res.json();
+          const dot = document.getElementById('docStatusDot');
+          const sidebarTitle = document.getElementById('docSidebarTitle');
+          const topbarTitle = document.getElementById('topbarDocTitle');
+          if (data.document_loaded) {
+            if (dot) dot.style.display = 'block';
+            if (sidebarTitle) sidebarTitle.textContent = data.filename;
+            if (topbarTitle) topbarTitle.textContent = data.filename;
+          } else {
+            if (dot) dot.style.display = 'none';
+            if (sidebarTitle) sidebarTitle.textContent = 'No document loaded';
+            if (topbarTitle) topbarTitle.textContent = 'Upload Document';
+          }
+        }
+      } catch (e) {}
+    }
+
+    function openUploadModal() {
+      document.getElementById('uploadModal').style.display = 'flex';
+      document.getElementById('modalUploadProgress').style.display = 'none';
+      document.getElementById('modalUploadMsg').style.display = 'none';
+    }
+
+    function closeUploadModal() {
+      document.getElementById('uploadModal').style.display = 'none';
+    }
+
+    function handleDirectFile(input) {
+      if (input.files && input.files.length) {
+        uploadFile(input.files[0]);
+      }
+    }
+
+    function uploadFileFromModal(input) {
+      if (input.files && input.files.length) {
+        uploadFile(input.files[0]);
+      }
+    }
+
+    async function uploadFile(file) {
+      const progress = document.getElementById('modalUploadProgress');
+      const msg = document.getElementById('modalUploadMsg');
+      progress.style.display = 'flex';
+      msg.style.display = 'none';
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const res = await fetch('/api/v1/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'Upload failed');
+
+        progress.style.display = 'none';
+        msg.style.display = 'block';
+        msg.style.background = 'rgba(16, 185, 129, 0.15)';
+        msg.style.color = '#10b981';
+        msg.innerHTML = `✨ <strong>${escapeHtml(data.filename)}</strong> indexed (${data.num_chunks} chunks ready)!`;
+        
+        checkDocStatus();
+        setTimeout(closeUploadModal, 1200);
+      } catch (err) {
+        progress.style.display = 'none';
+        msg.style.display = 'block';
+        msg.style.background = 'rgba(239, 68, 68, 0.15)';
+        msg.style.color = '#ef4444';
+        msg.textContent = 'Upload error: ' + err.message;
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      checkDocStatus();
+      loadSessions();
+    });
+  </script>
+</body>
+</html>
