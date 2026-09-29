@@ -37,7 +37,7 @@ def _preload_sample_document():
             sample_text = extract_text(sample_file)
             chunks = chunk_text(sample_text)
             _current_index["index"] = DocumentIndex(chunks)
-            _current_index["filename"] = "sample_doc.txt (Ibuprofen Clinical Pharmacology)"
+            _current_index["filename"] = "sample_doc.txt (Cognitive Overload & Cognitive Load Theory)"
             print("[INFO] Preloaded sample_doc.txt into active index.")
         except Exception as err:
             print(f"[WARN] Could not preload sample doc: {err}")

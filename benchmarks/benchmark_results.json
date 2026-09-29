@@ -31,376 +31,376 @@
     "avg_latency_ms": 520.0,
     "published": true
   },
-  "Approach B: Sentence NLI (DeBERTa-v3)": {
-    "tp": 20,
-    "fp": 1,
-    "fn": 0,
-    "tn": 19,
-    "accuracy": 97.5,
-    "precision": 95.24,
-    "recall": 100.0,
-    "f1": 97.56,
-    "avg_latency_ms": 207.7,
+  "Approach A: Embedding Similarity (MiniLM)": {
+    "tp": 5,
+    "fp": 4,
+    "fn": 15,
+    "tn": 16,
+    "accuracy": 52.5,
+    "precision": 55.56,
+    "recall": 25.0,
+    "f1": 34.48,
+    "avg_latency_ms": 89.3,
     "detailed": [
       {
         "id": "ragtruth_qa_01",
         "domain": "History / Architecture",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9958,
+        "score": 0.6787,
         "hallucination_type": "none",
-        "latency_ms": 1744.6
+        "latency_ms": 178.3
       },
       {
         "id": "ragtruth_qa_02",
         "domain": "History / Architecture",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0,
+        "predicted": "grounded",
+        "score": 0.6489,
         "hallucination_type": "evident_conflict",
-        "latency_ms": 161.6
+        "latency_ms": 77.7
       },
       {
         "id": "faithbench_ent_03",
         "domain": "Biomedicine / Pharmacology",
         "target": "grounded",
-        "predicted": "grounded",
-        "score": 0.9849,
+        "predicted": "hallucinated",
+        "score": 0.6628,
         "hallucination_type": "none",
-        "latency_ms": 199.1
+        "latency_ms": 125.1
       },
       {
         "id": "faithbench_ent_04",
         "domain": "Biomedicine / Pharmacology",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0,
+        "predicted": "grounded",
+        "score": 0.6928,
         "hallucination_type": "entity_swap_and_temporal",
-        "latency_ms": 136.1
+        "latency_ms": 101.4
       },
       {
         "id": "ragtruth_qa_05",
         "domain": "Geography / Demographics",
         "target": "grounded",
-        "predicted": "grounded",
-        "score": 0.995,
+        "predicted": "hallucinated",
+        "score": 0.6164,
         "hallucination_type": "none",
-        "latency_ms": 274.6
+        "latency_ms": 90.2
       },
       {
         "id": "ragtruth_qa_06",
         "domain": "Geography / Demographics",
         "target": "hallucinated",
         "predicted": "hallucinated",
-        "score": 0.484,
+        "score": 0.5892,
         "hallucination_type": "factual_conflict",
-        "latency_ms": 173.0
+        "latency_ms": 44.7
       },
       {
         "id": "factscore_07",
         "domain": "Biography / History",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9975,
+        "score": 0.7262,
         "hallucination_type": "none",
-        "latency_ms": 221.4
+        "latency_ms": 103.5
       },
       {
         "id": "factscore_08",
         "domain": "Biography / History",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.4984,
+        "predicted": "grounded",
+        "score": 0.6833,
         "hallucination_type": "partial_extrinsic",
-        "latency_ms": 185.8
+        "latency_ms": 92.4
       },
       {
         "id": "faithbench_neg_09",
         "domain": "Legal / Policy",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0,
+        "predicted": "grounded",
+        "score": 0.8116,
         "hallucination_type": "negation_inversion",
-        "latency_ms": 174.8
+        "latency_ms": 95.1
       },
       {
         "id": "faithbench_neg_10",
         "domain": "Legal / Policy",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9941,
+        "score": 0.8442,
         "hallucination_type": "none",
-        "latency_ms": 159.9
+        "latency_ms": 86.2
       },
       {
         "id": "ragtruth_num_11",
         "domain": "Finance / Earnings (Numerical Shift)",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9983,
+        "score": 0.7432,
         "hallucination_type": "none",
-        "latency_ms": 164.6
+        "latency_ms": 97.2
       },
       {
         "id": "ragtruth_num_12",
         "domain": "Finance / Earnings (Numerical Shift)",
         "target": "hallucinated",
         "predicted": "hallucinated",
-        "score": 0.0,
+        "score": 0.5822,
         "hallucination_type": "numerical_fabrication",
-        "latency_ms": 147.1
+        "latency_ms": 88.2
       },
       {
         "id": "ragtruth_comp_13",
         "domain": "Astronomy / Physics",
         "target": "grounded",
-        "predicted": "grounded",
-        "score": 0.9825,
+        "predicted": "hallucinated",
+        "score": 0.5787,
         "hallucination_type": "none",
-        "latency_ms": 184.7
+        "latency_ms": 97.9
       },
       {
         "id": "ragtruth_comp_14",
         "domain": "Astronomy / Physics",
         "target": "hallucinated",
         "predicted": "hallucinated",
-        "score": 0.4894,
+        "score": 0.4151,
         "hallucination_type": "scientific_contradiction",
-        "latency_ms": 210.0
+        "latency_ms": 88.9
       },
       {
         "id": "faithbench_ext_15",
         "domain": "Technology / Computing",
         "target": "grounded",
-        "predicted": "grounded",
-        "score": 0.9456,
+        "predicted": "hallucinated",
+        "score": 0.624,
         "hallucination_type": "none",
-        "latency_ms": 213.5
+        "latency_ms": 90.9
       },
       {
         "id": "faithbench_ext_16",
         "domain": "Technology / Computing",
         "target": "hallucinated",
         "predicted": "hallucinated",
-        "score": 0.4985,
+        "score": 0.6293,
         "hallucination_type": "extrinsic_entity_fabrication",
-        "latency_ms": 205.8
+        "latency_ms": 90.0
       },
       {
         "id": "ragtruth_med_17",
         "domain": "Genetics / Molecular Biology",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9967,
+        "score": 0.8485,
         "hallucination_type": "none",
-        "latency_ms": 150.0
+        "latency_ms": 97.1
       },
       {
         "id": "ragtruth_med_18",
         "domain": "Genetics / Molecular Biology",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0,
+        "predicted": "grounded",
+        "score": 0.7801,
         "hallucination_type": "biological_inversion",
-        "latency_ms": 156.2
+        "latency_ms": 90.3
       },
       {
         "id": "faithbench_law_19",
         "domain": "Intellectual Property Law",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9958,
+        "score": 0.8646,
         "hallucination_type": "none",
-        "latency_ms": 174.6
+        "latency_ms": 97.2
       },
       {
         "id": "faithbench_law_20",
         "domain": "Intellectual Property Law",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0,
+        "predicted": "grounded",
+        "score": 0.6538,
         "hallucination_type": "legal_concept_swap",
-        "latency_ms": 164.2
+        "latency_ms": 94.5
       },
       {
         "id": "halueval_qa_21",
         "domain": "Renewable Energy / Engineering",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9982,
+        "score": 0.7227,
         "hallucination_type": "none",
-        "latency_ms": 158.0
+        "latency_ms": 89.3
       },
       {
         "id": "halueval_qa_22",
         "domain": "Renewable Energy / Engineering",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0,
+        "predicted": "grounded",
+        "score": 0.6427,
         "hallucination_type": "numerical_fabrication",
-        "latency_ms": 136.5
+        "latency_ms": 51.8
       },
       {
         "id": "ragtruth_fin_23",
         "domain": "Macroeconomics / Monetary Policy",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9969,
+        "score": 0.7134,
         "hallucination_type": "none",
-        "latency_ms": 177.0
+        "latency_ms": 83.0
       },
       {
         "id": "ragtruth_fin_24",
         "domain": "Macroeconomics / Monetary Policy",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0,
+        "predicted": "grounded",
+        "score": 0.6604,
         "hallucination_type": "factual_conflict",
-        "latency_ms": 142.6
+        "latency_ms": 84.6
       },
       {
         "id": "faithbench_rel_25",
         "domain": "Space Exploration / Astrophysics",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9957,
+        "score": 0.8186,
         "hallucination_type": "none",
-        "latency_ms": 170.0
+        "latency_ms": 85.3
       },
       {
         "id": "faithbench_rel_26",
         "domain": "Space Exploration / Astrophysics",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0,
+        "predicted": "grounded",
+        "score": 0.7135,
         "hallucination_type": "entity_swap_and_temporal",
-        "latency_ms": 154.0
+        "latency_ms": 82.7
       },
       {
         "id": "ragtruth_bio_27",
         "domain": "Microbiology / Immunology",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9977,
+        "score": 0.8169,
         "hallucination_type": "none",
-        "latency_ms": 152.2
+        "latency_ms": 90.4
       },
       {
         "id": "ragtruth_bio_28",
         "domain": "Microbiology / Immunology",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0,
+        "predicted": "grounded",
+        "score": 0.6105,
         "hallucination_type": "biological_inversion",
-        "latency_ms": 151.5
+        "latency_ms": 88.7
       },
       {
         "id": "factscore_comp_29",
         "domain": "Computing / Software Engineering",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9899,
+        "score": 0.799,
         "hallucination_type": "none",
-        "latency_ms": 148.1
+        "latency_ms": 88.6
       },
       {
         "id": "factscore_comp_30",
         "domain": "Computing / Software Engineering",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0001,
+        "predicted": "grounded",
+        "score": 0.7301,
         "hallucination_type": "partial_extrinsic",
-        "latency_ms": 146.1
+        "latency_ms": 89.2
       },
       {
         "id": "faithbench_date_31",
         "domain": "History / Treaties",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.995,
+        "score": 0.7967,
         "hallucination_type": "none",
-        "latency_ms": 164.4
+        "latency_ms": 91.6
       },
       {
         "id": "faithbench_date_32",
         "domain": "History / Treaties",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0,
+        "predicted": "grounded",
+        "score": 0.6517,
         "hallucination_type": "temporal_shift",
-        "latency_ms": 134.6
+        "latency_ms": 43.3
       },
       {
         "id": "ragtruth_chem_33",
         "domain": "Chemistry / Materials Science",
         "target": "grounded",
-        "predicted": "hallucinated",
-        "score": 0.032,
+        "predicted": "grounded",
+        "score": 0.9548,
         "hallucination_type": "none",
-        "latency_ms": 181.9
+        "latency_ms": 105.4
       },
       {
         "id": "ragtruth_chem_34",
         "domain": "Chemistry / Materials Science",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0,
+        "predicted": "grounded",
+        "score": 0.7411,
         "hallucination_type": "scientific_contradiction",
-        "latency_ms": 156.8
+        "latency_ms": 93.3
       },
       {
         "id": "halueval_env_35",
         "domain": "Earth Science / Climate",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9943,
+        "score": 0.9049,
         "hallucination_type": "none",
-        "latency_ms": 152.4
+        "latency_ms": 44.2
       },
       {
         "id": "halueval_env_36",
         "domain": "Earth Science / Climate",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0,
+        "predicted": "grounded",
+        "score": 0.8281,
         "hallucination_type": "numerical_fabrication",
-        "latency_ms": 135.0
+        "latency_ms": 90.6
       },
       {
         "id": "ragtruth_sports_37",
         "domain": "Sports / Olympic History",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9555,
+        "score": 0.8739,
         "hallucination_type": "none",
-        "latency_ms": 141.0
+        "latency_ms": 86.5
       },
       {
         "id": "ragtruth_sports_38",
         "domain": "Sports / Olympic History",
         "target": "hallucinated",
-        "predicted": "hallucinated",
-        "score": 0.0,
+        "predicted": "grounded",
+        "score": 0.6411,
         "hallucination_type": "entity_swap_and_temporal",
-        "latency_ms": 140.1
+        "latency_ms": 82.7
       },
       {
         "id": "faithbench_med_39",
         "domain": "Medicine / Cardiology",
         "target": "grounded",
         "predicted": "grounded",
-        "score": 0.9947,
+        "score": 0.7032,
         "hallucination_type": "none",
-        "latency_ms": 184.0
+        "latency_ms": 91.1
       },
       {
         "id": "faithbench_med_40",
         "domain": "Medicine / Cardiology",
         "target": "hallucinated",
         "predicted": "hallucinated",
-        "score": 0.0001,
+        "score": 0.54,
         "hallucination_type": "biological_inversion",
-        "latency_ms": 181.0
+        "latency_ms": 82.4
       }
     ],
     "published": false
