@@ -1124,6 +1124,224 @@
       .inspector-panel { position: absolute; right: 0; z-index: 50; }
       .inspector-panel.collapsed { margin-right: -390px; }
     }
+
+    /* ====================================================
+       SETTINGS MODAL
+       ==================================================== */
+    .settings-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.18s ease;
+    }
+    .settings-modal.open {
+      display: flex;
+    }
+    .settings-modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 460px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: slideUp 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(18px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .settings-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 22px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .settings-modal-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .settings-modal-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+    .settings-modal-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-main);
+    }
+    .settings-modal-subtitle {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+    .btn-close-settings {
+      background: none;
+      border: none;
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: all 0.15s;
+      line-height: 1;
+    }
+    .btn-close-settings:hover {
+      background: var(--hover-bg);
+      color: var(--text-main);
+    }
+    .settings-body {
+      padding: 18px 22px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .settings-section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      margin-top: 8px;
+    }
+    .settings-section-label:first-child {
+      margin-top: 0;
+    }
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 16px;
+      border-radius: 13px;
+      background: var(--bg-app);
+      border: 1px solid var(--border-color);
+      transition: background 0.15s;
+    }
+    .settings-row:hover {
+      background: var(--hover-bg);
+    }
+    .settings-row-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .settings-row-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .settings-row-icon.appearance { background: rgba(59, 130, 246, 0.12); }
+    .settings-row-text strong {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: block;
+    }
+    .settings-row-text span {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    /* iOS-style Toggle Switch */
+    .theme-switch-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .theme-switch-label-text {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      min-width: 34px;
+      text-align: right;
+    }
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 27px;
+      flex-shrink: 0;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: var(--border-color);
+      transition: background 0.25s ease;
+      cursor: pointer;
+    }
+    .toggle-switch input:checked + .toggle-track {
+      background: #3b82f6;
+    }
+    .toggle-thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+    .toggle-switch input:checked ~ .toggle-thumb {
+      transform: translateX(23px);
+    }
+    .toggle-track:focus-visible {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
+
+    /* Settings button in topbar */
+    .btn-settings-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 6px 11px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-settings-toggle:hover {
+      border-color: #3b82f6;
+      background: var(--hover-bg);
+    }
   </style>
 </head>
 <body>
@@ -1197,6 +1415,10 @@
           <button id="inspectorToggleBtn" class="btn-inspector-toggle active" onclick="toggleInspector()" title="Toggle Right Side Panel">
             <span>📊</span>
             <span>Inspection Panel</span>
+          </button>
+          <button class="btn-settings-toggle" onclick="openSettingsModal()" title="Settings" id="settingsBtn">
+            <span>⚙️</span>
+            <span>Settings</span>
           </button>
         </div>
       </header>
@@ -1290,6 +1512,57 @@
     </div>
   </div>
 
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="settings-modal" onclick="if(event.target===this) closeSettingsModal()">
+    <div class="settings-modal-content">
+      <div class="settings-modal-header">
+        <div class="settings-modal-header-left">
+          <div class="settings-modal-icon">⚙️</div>
+          <div>
+            <div class="settings-modal-title">Settings</div>
+            <div class="settings-modal-subtitle">Customize your Veritas experience</div>
+          </div>
+        </div>
+        <button class="btn-close-settings" onclick="closeSettingsModal()" title="Close settings">✕</button>
+      </div>
+
+      <div class="settings-body">
+        <div class="settings-section-label">Appearance</div>
+
+        <!-- Theme Toggle Row -->
+        <div class="settings-row">
+          <div class="settings-row-left">
+            <div class="settings-row-icon appearance" id="settingsThemeRowIcon">🌙</div>
+            <div class="settings-row-text">
+              <strong id="settingsThemeRowTitle">Dark Mode</strong>
+              <span id="settingsThemeRowDesc">Switch between light and dark interface</span>
+            </div>
+          </div>
+          <div class="theme-switch-wrap">
+            <span class="theme-switch-label-text" id="settingsThemeSwitchLabel">On</span>
+            <label class="toggle-switch" title="Toggle light / dark mode">
+              <input type="checkbox" id="settingsThemeCheckbox" onchange="onSettingsThemeToggle(this)">
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-section-label" style="margin-top: 18px;">About</div>
+        <div class="settings-row" style="cursor: default;">
+          <div class="settings-row-left">
+            <div class="settings-row-icon" style="background: rgba(16,185,129,0.12);">🔍</div>
+            <div class="settings-row-text">
+              <strong>Veritas RAG</strong>
+              <span>Hallucination Flagging Layer &nbsp;·&nbsp; v1.0</span>
+            </div>
+          </div>
+          <span style="font-size:0.74rem; color:var(--text-muted); font-weight:600;">FYP 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     // App State — Web UI is locked to Approach A (Embedding Similarity)
     // Use the terminal CLI (veritas_cli.py) to test Approaches B, C, and Hybrid
@@ -1319,10 +1592,47 @@
     function setTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('veritas_theme', theme);
+      const isDark = theme === 'dark';
+
+      // Sidebar footer button
       const icon = document.getElementById('themeIcon');
       const label = document.getElementById('themeLabel');
-      if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
-      if (label) label.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+      if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+      if (label) label.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+
+      // Settings modal toggle sync
+      const checkbox = document.getElementById('settingsThemeCheckbox');
+      const switchLabel = document.getElementById('settingsThemeSwitchLabel');
+      const rowIcon = document.getElementById('settingsThemeRowIcon');
+      const rowTitle = document.getElementById('settingsThemeRowTitle');
+      if (checkbox) checkbox.checked = isDark;
+      if (switchLabel) switchLabel.textContent = isDark ? 'On' : 'Off';
+      if (rowIcon) rowIcon.textContent = isDark ? '🌙' : '☀️';
+      if (rowTitle) rowTitle.textContent = isDark ? 'Dark Mode' : 'Light Mode';
+    }
+
+    // Settings Modal
+    function openSettingsModal() {
+      const modal = document.getElementById('settingsModal');
+      modal.classList.add('open');
+      // Sync checkbox state with current theme
+      const isDark = (document.documentElement.getAttribute('data-theme') || 'dark') === 'dark';
+      const checkbox = document.getElementById('settingsThemeCheckbox');
+      const switchLabel = document.getElementById('settingsThemeSwitchLabel');
+      const rowIcon = document.getElementById('settingsThemeRowIcon');
+      const rowTitle = document.getElementById('settingsThemeRowTitle');
+      if (checkbox) checkbox.checked = isDark;
+      if (switchLabel) switchLabel.textContent = isDark ? 'On' : 'Off';
+      if (rowIcon) rowIcon.textContent = isDark ? '🌙' : '☀️';
+      if (rowTitle) rowTitle.textContent = isDark ? 'Dark Mode' : 'Light Mode';
+    }
+
+    function closeSettingsModal() {
+      document.getElementById('settingsModal').classList.remove('open');
+    }
+
+    function onSettingsThemeToggle(checkbox) {
+      setTheme(checkbox.checked ? 'dark' : 'light');
     }
 
     // Sidebar & Inspector toggles
